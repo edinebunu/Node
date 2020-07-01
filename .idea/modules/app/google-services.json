@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1064402154547-aha61um9sto3d8ql3kpu9vulk7qngd9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nodedpit",
+            "certificate_hash": "cdf1ed7a4bfb7d2553c0a717878012e9ed6084a6"
+          }
+        },
+        {
           "client_id": "1064402154547-i8247iv5crndt9g240lnsa6a67qdo5lq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
