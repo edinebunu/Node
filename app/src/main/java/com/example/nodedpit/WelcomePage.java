@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class WelcomePage extends AppCompatActivity {
 
 
+    int a;
     private static final String TAG = "WelcomePage";
     Button SignUp;
     Button LogIn;
