@@ -1,5 +1,6 @@
 package com.example.nodedpit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -60,14 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        try{
-        System.out.println(mAuth.getCurrentUser().getUid());}
-        catch(NullPointerException e)
-        {
-            System.out.println("NULL");
-        }
     }
-
 
     private void verifyCredentials(String email, String password) {
 
@@ -87,25 +81,38 @@ public class SignUpActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 //Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                // updateUI(user);
+
+                                String mUid = user.getUid();
+
+                                try
+                                {
+                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                    intent.putExtra("UID",mUid);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                catch(NullPointerException e){
+                                    Toast.makeText(SignUpActivity.this, "Signup failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 // If sign in fails, display a message to the user.
-                                // Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignUpActivity.this, "Authentication failed.",
+
+                                Toast.makeText(SignUpActivity.this, "Invalid credentials",
                                         Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
                             }
                             // ...
                         }
                     });
         }
-
         else{
 
             Toast.makeText(SignUpActivity.this, "Invalid Email",
                     Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 }
