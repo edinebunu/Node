@@ -1,5 +1,6 @@
 package com.example.nodedpit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,6 +49,9 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
     Bitmap mPicture = null;
 
+
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,18 +101,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 String mUid = user.getUid();
 
-                                try
-                                {
-                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+
                                     intent.putExtra("UID",mUid);
-                                    handleUpload(mPicture);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                catch(NullPointerException e){
-                                    Toast.makeText(SignUpActivity.this, "Signup failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                                    handleUpload(mPicture, intent);
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -116,7 +112,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "Invalid credentials",
                                         Toast.LENGTH_SHORT).show();
                             }
-                            // ...
                         }
                     });
         }
@@ -163,7 +158,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private void handleUpload(Bitmap bitmap){
+    private void handleUpload(Bitmap bitmap, final Intent intent){
         Log.d(TAG, "handleUpload: start");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
@@ -179,7 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            getDownloadUrl(reference);
+                            getDownloadUrl(reference, intent);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -197,19 +192,19 @@ public class SignUpActivity extends AppCompatActivity {
         Log.d(TAG, "handleUpload: end");
     }
 
-    private void getDownloadUrl(StorageReference reference)
+    private void getDownloadUrl(StorageReference reference,final Intent intent)
     {
         Log.d(TAG, "getDownloadUrl: start");
         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                setProfileUrl(uri);
+                setProfileUrl(uri, intent);
             }
         });
         Log.d(TAG, "getDownloadUrl: end");
     }
 
-    private void setProfileUrl(Uri uri)
+    private void setProfileUrl(Uri uri, final Intent intent)
     {
         Log.d(TAG, "setProfileUrl: start");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -222,6 +217,8 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(SignUpActivity.this, "Updated succesfully", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -232,5 +229,4 @@ public class SignUpActivity extends AppCompatActivity {
                 });
         Log.d(TAG, "setProfileUrl: end");
     }
-
 }
