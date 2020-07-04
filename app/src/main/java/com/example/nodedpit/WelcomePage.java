@@ -14,6 +14,7 @@ public class WelcomePage extends AppCompatActivity {
     private static final String TAG = "WelcomePage";
     Button SignUp;
     Button LogIn;
+    Button test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,18 @@ public class WelcomePage extends AppCompatActivity {
                 finish();
             }
         });
+
+        test = (Button) findViewById(R.id.test);
+
+        test.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(WelcomePage.this, UserData.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
     }
 
 
