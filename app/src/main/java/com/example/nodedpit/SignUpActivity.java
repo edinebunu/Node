@@ -101,8 +101,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 final Intent intent = new Intent(SignUpActivity.this, UserData.class);
 
                                     intent.putExtra("UID",mUid);
-                                    intent.putExtra("Name", mName.toString());
-                                    intent.putExtra("LastName", mLastName.toString());
+                                    intent.putExtra("Name", mName.getText().toString());
+                                    intent.putExtra("LastName", mLastName.getText().toString());
                                     handleUpload(mPicture, intent);
 
                             } else {

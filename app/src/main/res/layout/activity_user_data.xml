@@ -22,9 +22,12 @@
         android:id="@+id/Dateid"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="108dp"
         android:background="@drawable/roundedtext"
         android:ems="10"
+        android:gravity="center_vertical|center_horizontal"
         android:hint="Date of birth"
         android:text="Date of birth"
         android:textAlignment="center"
@@ -33,11 +36,7 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view6"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical|center_horizontal"
-        />
+        app:layout_constraintTop_toTopOf="@id/view6" />
 
     <EditText
         android:id="@+id/Countryid"
@@ -89,5 +88,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Cityid" />
+
+    <Button
+        android:id="@+id/signUpBtn"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedtext"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Hobbyid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
