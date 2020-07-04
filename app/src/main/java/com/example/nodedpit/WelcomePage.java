@@ -41,17 +41,6 @@ public class WelcomePage extends AppCompatActivity {
             }
         });
 
-        test = (Button) findViewById(R.id.test);
-
-        test.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(WelcomePage.this, UserData.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
     }
 
 

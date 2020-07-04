@@ -42,14 +42,12 @@ public class SignUpActivity extends AppCompatActivity {
     EditText mEmail;
     EditText mPassword;
     CircleImageView profileImage;
-    Button signup;
+    Button nextBtn;
 
     private FirebaseAuth mAuth;
     public static final int PICK_IMAGE = 10101;
     private static final String TAG = "SignUpActivity";
     Bitmap mPicture = null;
-
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -57,16 +55,15 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         mAuth = FirebaseAuth.getInstance();
-        signup = (Button) findViewById(R.id.button2);
+        nextBtn = (Button) findViewById(R.id.button2);
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mName = (EditText) findViewById(R.id.editTextTextPersonName3);
                 mLastName = (EditText) findViewById(R.id.editTextTextPersonName2);
                 mEmail = (EditText) findViewById(R.id.editTextTextPersonName);
                 mPassword = (EditText) findViewById(R.id.editTextTextPersonName4);
-
                 verifyCredentials(mEmail.getText().toString(),mPassword.getText().toString());
             }
         });
@@ -101,9 +98,11 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 String mUid = user.getUid();
 
-                                final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                final Intent intent = new Intent(SignUpActivity.this, UserData.class);
 
                                     intent.putExtra("UID",mUid);
+                                    intent.putExtra("Name", mName.toString());
+                                    intent.putExtra("LastName", mLastName.toString());
                                     handleUpload(mPicture, intent);
 
                             } else {
