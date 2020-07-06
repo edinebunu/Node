@@ -1,39 +1,30 @@
 package com.example.nodedpit;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.nodedpit.Firebsae.UserProfile;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.IOException;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout mDrawLayout;
+    private ActionBarDrawerToggle mToggle;
     private long backPressedTime;
     private Toast backToast;
-    TextView ttt;
-    CircleImageView imgv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserProfile p = new UserProfile();
-
-        imgv = (CircleImageView) findViewById(R.id.profile_image);
-
-        try {
-            p.getProfileImg(FirebaseAuth.getInstance().getCurrentUser().getUid(),imgv);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -52,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
         }
         backPressedTime = System.currentTimeMillis();
     }
-
-
-
 
 
 }
