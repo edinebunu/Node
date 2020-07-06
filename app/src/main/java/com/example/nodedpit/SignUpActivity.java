@@ -79,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void verifyCredentials(String email, String password) {
 
-        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
 
         Pattern pattern = Pattern.compile(regex);
 

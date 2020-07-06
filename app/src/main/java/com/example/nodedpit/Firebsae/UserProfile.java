@@ -3,7 +3,6 @@ package com.example.nodedpit.Firebsae;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -19,6 +18,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserProfile {
 
     private static final String TAG = "UserProfile";
@@ -26,7 +27,7 @@ public class UserProfile {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://node-85fa5.appspot.com/");
 
-    public void getProfileImg(String uid, final ImageView view) throws IOException {
+    public void getProfileImg(String uid, final CircleImageView view) throws IOException {
         final Bitmap mImg;
         StorageReference mRef = storageReference.child("profile-images").child(uid+".jpeg");
         final File file = File.createTempFile("image","jpeg");

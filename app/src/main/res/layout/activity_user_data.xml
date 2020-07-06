@@ -31,7 +31,7 @@
         android:hint="Date of birth"
         android:text="Date of birth"
         android:textAlignment="center"
-        android:textColor="#FFFF"
+        android:textColor="#FFFFFF"
         android:textColorHint="#FFFF"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
