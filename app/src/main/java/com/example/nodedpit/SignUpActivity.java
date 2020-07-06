@@ -87,36 +87,36 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (matcher.matches()) {
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                //Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+            if (mPicture == null) {
+                Toast.makeText(SignUpActivity.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
+            } else {
 
-                                String mUid = user.getUid();
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    //Log.d(TAG, "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
-                                final Intent intent = new Intent(SignUpActivity.this, UserData.class);
+                                    String mUid = user.getUid();
 
-                                    intent.putExtra("UID",mUid);
+                                    final Intent intent = new Intent(SignUpActivity.this, UserData.class);
+
+                                    intent.putExtra("UID", mUid);
                                     intent.putExtra("Name", mName.getText().toString());
                                     intent.putExtra("LastName", mLastName.getText().toString());
+                                    handleUpload(mPicture, intent);
+                                } else {
+                                    // If sign in fails, display a message to the user.
 
-                                if(mPicture == null){
-                                    Toast.makeText(SignUpActivity.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUpActivity.this, "Invalid credentials",
+                                            Toast.LENGTH_SHORT).show();
                                 }
-                                else handleUpload(mPicture, intent);
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-
-                                Toast.makeText(SignUpActivity.this, "Invalid credentials",
-                                        Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
+                        });
+            }
         }
         else{
 
