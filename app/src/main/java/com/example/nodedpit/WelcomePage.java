@@ -15,7 +15,7 @@ public class WelcomePage extends AppCompatActivity {
     private static final String TAG = "WelcomePage";
     Button SignUp;
     Button LogIn;
-    Button test;
+    Button Test;
     private long backPressedTime;
     private Toast backToast;
 
@@ -43,7 +43,6 @@ public class WelcomePage extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override

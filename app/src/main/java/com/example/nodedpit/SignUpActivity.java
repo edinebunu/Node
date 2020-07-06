@@ -103,7 +103,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     intent.putExtra("UID",mUid);
                                     intent.putExtra("Name", mName.getText().toString());
                                     intent.putExtra("LastName", mLastName.getText().toString());
-                                    handleUpload(mPicture, intent);
+
+                                if(mPicture == null){
+                                    Toast.makeText(SignUpActivity.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
+                                }
+                                else handleUpload(mPicture, intent);
 
                             } else {
                                 // If sign in fails, display a message to the user.
