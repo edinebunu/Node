@@ -2,6 +2,7 @@ package com.example.nodedpit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,14 +16,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawLayout;
-
 
     private long backPressedTime;
     private Toast backToast;
@@ -35,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -50,47 +54,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
-        mNames.add("aa");
-        mDesc.add("bb");
+    }
 
-        mNames.add("cc");
-        mDesc.add("dd");
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getEventBuffer();
+    }
 
-        mNames.add("ee");
-        mDesc.add("ff");
+    public void getEventBuffer()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    private static final String TAG = "Event";
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
 
-        mNames.add("gg");
-        mDesc.add("hh");
-
-        mNames.add("aa");
-        mDesc.add("bb");
-
-        mNames.add("cc");
-        mDesc.add("dd");
-
-        mNames.add("ee");
-        mDesc.add("ff");
-
-        mNames.add("gg");
-        mDesc.add("hh");
-
-        mNames.add("aa");
-        mDesc.add("bb");
-
-        mNames.add("cc");
-        mDesc.add("dd");
-
-        mNames.add("ee");
-        mDesc.add("ff");
-
-        mNames.add("gg");
-        mDesc.add("hh");
-
-        initRecyclerView();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                mNames.add(document.getString("Name"));
+                                mDesc.add(document.getString("Description"));
+                            }
+                            initRecyclerView();
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -161,6 +156,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, WelcomePage.class);
         startActivity(intent);
     }
-
 
 }
