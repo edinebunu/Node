@@ -1,6 +1,7 @@
 package com.example.nodedpit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,13 +25,20 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
 
-        /*
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean login = prefs.getBoolean("login", false);
+
+        if(login == false)
+            LogInActivity.PreferenceData.setUserLoggedInStatus(this,false);
+        else
+            LogInActivity.PreferenceData.setUserLoggedInStatus(this,true);
+
         if(LogInActivity.PreferenceData.getUserLoggedInStatus(this)){
             Intent intent = new Intent(WelcomePage.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
-        */
 
         SignUp = (Button) findViewById(R.id.signup);
 

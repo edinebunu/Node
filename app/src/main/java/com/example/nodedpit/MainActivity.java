@@ -1,6 +1,7 @@
 package com.example.nodedpit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -153,8 +154,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void SignOut() {
-        Intent intent = new Intent(this, WelcomePage.class);
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("login", false);
+        editor.apply();
+        Intent intent = new Intent( MainActivity.this, WelcomePage.class);
         startActivity(intent);
+        finish();
     }
 
 }

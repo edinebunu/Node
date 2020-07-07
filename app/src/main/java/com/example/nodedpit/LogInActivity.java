@@ -69,6 +69,10 @@ private void signInAuth (String inputEmail, String inputPassword){
 
                         try
                         {
+                            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("login", true);
+                            editor.apply();
                             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
                             intent.putExtra("UID",mUid);
                             startActivity(intent);
