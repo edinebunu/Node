@@ -40,7 +40,7 @@ public class UserData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_data);
 
-        mDisplayDate = (TextView) findViewById(R.id.Dateid);
+        mDisplayDate = findViewById(R.id.Dateid);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +71,10 @@ public class UserData extends AppCompatActivity {
 
                         UserProfile p = new UserProfile();
                         p.createSignUp(mName,mLastName,mUid,cityString,countryString,day,month,year);
+
+                        final Intent intent = new Intent(UserData.this, MainActivity.class);
+                        intent.putExtra("UID", mUid);
+                        startActivity(intent);
                     }
                 });
 
@@ -78,7 +82,6 @@ public class UserData extends AppCompatActivity {
                 mUid = intent.getStringExtra("UID");
                 mName = intent.getStringExtra("Name");
                 mLastName = intent.getStringExtra("LastName");
-
             }
         });
 

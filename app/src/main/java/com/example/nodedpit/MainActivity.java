@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
-
         mNames.add("aa");
         mDesc.add("bb");
 
@@ -106,10 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.SignOut:
                 SignOut();
                 break;
-
         }
 
-        mDrawLayout.closeDrawer(GravityCompat.END);
+        mDrawLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -149,7 +147,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openAddEvent() {
-        Intent intent = new Intent(this, CreateEvent.class);
+        Intent intent = new Intent(MainActivity.this, CreateEvent.class);
+        intent.putExtra("UID",mUid);
         startActivity(intent);
     }
 

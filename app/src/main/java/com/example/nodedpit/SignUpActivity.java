@@ -74,7 +74,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
     }
 
     private void verifyCredentials(String email, String password) {
@@ -103,11 +102,12 @@ public class SignUpActivity extends AppCompatActivity {
                                     String mUid = user.getUid();
 
                                     final Intent intent = new Intent(SignUpActivity.this, UserData.class);
-
                                     intent.putExtra("UID", mUid);
                                     intent.putExtra("Name", mName.getText().toString());
                                     intent.putExtra("LastName", mLastName.getText().toString());
+
                                     handleUpload(mPicture, intent);
+
                                 } else {
                                     // If sign in fails, display a message to the user.
 
@@ -204,12 +204,10 @@ public class SignUpActivity extends AppCompatActivity {
                 setProfileUrl(uri, intent);
             }
         });
-        Log.d(TAG, "getDownloadUrl: end");
     }
 
     private void setProfileUrl(Uri uri, final Intent intent)
     {
-        Log.d(TAG, "setProfileUrl: start");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()

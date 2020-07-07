@@ -43,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                Toast.makeText(mContext, "Clicked", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+
     }
 
     @Override
