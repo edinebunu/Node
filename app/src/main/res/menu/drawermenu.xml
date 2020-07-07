@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/profile" android:title="Profile"/>
+<item android:id="@+id/profileButton" android:title="Profile"/>
 
 <item android:id="@+id/Settings" android:title="Settings"/>
 
@@ -9,6 +9,8 @@
 <item android:id="@+id/Upcoming" android:title="Big Upcoming Events"/>
 
 <item android:id="@+id/Past" android:title="Past Events"/>
+
+<item android:id="@+id/AddEvent" android:title="Add Event"/>
 
 <item android:id="@+id/SignOut" android:title="Sign Out"/>
 
