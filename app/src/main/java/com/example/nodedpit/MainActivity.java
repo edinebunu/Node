@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.profileButton:
                 openProfile();
                 break;
+            case R.id.SignOut:
+                SignOut();
+                break;
+
         }
 
         mDrawLayout.closeDrawer(GravityCompat.END);
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
 
         if (mDrawLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawLayout.closeDrawer(GravityCompat.END);
+            mDrawLayout.closeDrawer(GravityCompat.START);
         } else {
 
 
@@ -151,6 +155,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void openProfile() {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void SignOut() {
+        Intent intent = new Intent(this, WelcomePage.class);
         startActivity(intent);
     }
 
