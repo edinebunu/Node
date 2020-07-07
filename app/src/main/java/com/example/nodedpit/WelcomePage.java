@@ -24,6 +24,14 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
 
+        /*
+        if(LogInActivity.PreferenceData.getUserLoggedInStatus(this)){
+            Intent intent = new Intent(WelcomePage.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        */
+
         SignUp = (Button) findViewById(R.id.signup);
 
         SignUp.setOnClickListener(new View.OnClickListener() {
