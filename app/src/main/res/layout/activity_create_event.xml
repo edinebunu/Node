@@ -50,6 +50,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
 
+    <TextView
+        android:id="@+id/Dateid"
+        android:layout_width="210dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Set Date"
+        android:text="Set Date"
+        android:textColor="#a0a0a0"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8" />
+
+    <TextView
+        android:id="@+id/Hourid"
+        android:layout_width="210dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Set Hour"
+        android:text="Set Hour"
+        android:textColor="#a0a0a0"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Dateid" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
