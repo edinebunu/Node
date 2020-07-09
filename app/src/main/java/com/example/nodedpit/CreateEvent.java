@@ -184,7 +184,7 @@ public class CreateEvent extends AppCompatActivity {
     private void handleUpload(Bitmap bitmap){
         Log.d(TAG, "handleUpload: start");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50, baos);
 
         try {
             final StorageReference reference = FirebaseStorage.getInstance()
@@ -227,10 +227,9 @@ public class CreateEvent extends AppCompatActivity {
         if(!name.equals("") && !desc.equals("") && !loc.equals(""))
         {
         Event e = new Event();
-        e.createEvent(name,desc,loc,eventYear,eventMonth,eventDay,eventHour,eventMinute);
+        e.createEvent(name,desc,loc,eventYear,eventMonth,eventDay,eventHour,eventMinute,mUid);
         handleUpload(mCover);
         finish();
         }
     }
-
 }

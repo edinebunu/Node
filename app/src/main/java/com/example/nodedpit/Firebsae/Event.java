@@ -26,12 +26,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Event {
     private static final String TAG = "Event";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void createEvent(String name, String description, String location, int yy, int mm, int dd, int hh, int min)
+    public void createEvent(String name, String description, String location, int yy, int mm, int dd, int hh, int min, String uid)
     {
         final String ideaID = UUID.randomUUID().toString();
 
@@ -45,6 +47,7 @@ public class Event {
         info.put("DateHour", hh);
         info.put("DateMin", min);
         info.put("Timestamp",new Date());
+        info.put("HostId",uid);
 
         //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -104,6 +107,25 @@ public class Event {
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
+                    }
+                });
+    }
+
+
+    public void setProfileImg(String uid, final CircleImageView view) throws IOException {
+        final Bitmap mImg;
+        StorageReference mRef = storageReference.child("profile-images").child(uid+".jpeg");
+        final File file = File.createTempFile("image","jpeg");
+        mRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                view.setImageBitmap(bitmap);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                     }
                 });
     }

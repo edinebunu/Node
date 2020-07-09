@@ -48,6 +48,7 @@ public class EventPageActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection("Events").document(mDocumentName);
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -72,8 +73,6 @@ public class EventPageActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
     }
 }
