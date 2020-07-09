@@ -32,10 +32,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private long backPressedTime;
     private Toast backToast;
+
     String mUid;
+    String mDocumentName;
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
+    private ArrayList<String> mIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
+        getEventBuffer();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        getEventBuffer();
     }
 
     public void getEventBuffer()
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mNames.add(document.getString("Name"));
                                 mDesc.add(document.getString("Description"));
+                                mIds.add(document.getId());
+
                             }
                             initRecyclerView();
                         } else {
@@ -114,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDrawLayout.closeDrawer(GravityCompat.START);
         } else {
 
-
             if (backPressedTime + 2000 > System.currentTimeMillis()) {
                 backToast.cancel();
                 super.onBackPressed();
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRecyclerView() {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, mIds, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

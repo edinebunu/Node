@@ -1,6 +1,9 @@
 package com.example.nodedpit.Firebsae;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -11,7 +14,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,13 +31,19 @@ public class Event {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void createEvent(String name, String description)
+    public void createEvent(String name, String description, String location, int yy, int mm, int dd, int hh, int min)
     {
         final String ideaID = UUID.randomUUID().toString();
 
         Map<String, Object> info = new HashMap<>();
         info.put("Name",name);
         info.put("Description",description);
+        info.put("Location", location);
+        info.put("DateYear", yy);
+        info.put("DateMonth", mm);
+        info.put("DateDay",dd);
+        info.put("DateHour", hh);
+        info.put("DateMin", min);
         info.put("Timestamp",new Date());
 
         //FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +60,28 @@ public class Event {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReferenceFromUrl("gs://node-85fa5.appspot.com/");
+
+    public void setCoverImg(String eventName, final ImageView view) throws IOException {
+
+        StorageReference mRef = storageReference.child("Event-Covers").child(eventName+".jpeg");
+        final File file = File.createTempFile("image","jpeg");
+        mRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                view.setImageBitmap(bitmap);
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                     }
                 });
     }

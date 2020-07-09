@@ -3,36 +3,52 @@ package com.example.nodedpit;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nodedpit.Firebsae.Event;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 public class CreateEvent extends AppCompatActivity {
 
     private static final String TAG = "CreateEvent";
+    public static final int PICK_IMAGE = 10101;
+
 
     EditText mName ;
     EditText mDescription;
+    EditText mLocation;
 
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TextView mDisplayHour;
     private TimePickerDialog.OnTimeSetListener mHourSetListener;
+    int eventYear, eventMonth, eventDay, eventHour, eventMinute;
+
+    Bitmap mCover = null;
 
     String mUid;
 
@@ -62,6 +78,9 @@ public class CreateEvent extends AppCompatActivity {
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+                eventYear = year;
+                eventMonth = month;
+                eventDay = day;
             };
         });
 
@@ -128,10 +147,70 @@ public class CreateEvent extends AppCompatActivity {
                 },mHour,mMin, true);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
                 dialog.show();
+                eventHour = mHour;
+                eventMinute = mMin;
             };
         });
+    }
+
+    public void chooseCover(View view){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent,"pick an image"), PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.d(TAG, "onActivityResult: start");
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_IMAGE)
+        {
+            try {
+                InputStream inputStream = getContentResolver()
+                        .openInputStream(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                mCover = bitmap;
+            }
+            catch(FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
+    private void handleUpload(Bitmap bitmap){
+        Log.d(TAG, "handleUpload: start");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
+
+        try {
+            final StorageReference reference = FirebaseStorage.getInstance()
+                    .getReference()
+                    .child("Event-Covers")
+                    .child(mName.getText().toString()+".jpeg");
+
+            reference.putBytes(baos.toByteArray())
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Error Firebase Unreached", Toast.LENGTH_SHORT).show();
+        }
+
+        Log.d(TAG, "handleUpload: end");
     }
 
 
@@ -139,12 +218,19 @@ public class CreateEvent extends AppCompatActivity {
     {
         mName =(EditText) findViewById(R.id.editTextTextPersonName5);
         mDescription =(EditText) findViewById(R.id.editTextTextPersonName8);
+        mLocation = (EditText) findViewById(R.id.editTextTextPersonName6);
+
         String name = mName.getText().toString();
         String desc = mDescription.getText().toString();
+        String loc = mLocation.getText().toString();
 
+        if(!name.equals("") && !desc.equals("") && !loc.equals(""))
+        {
         Event e = new Event();
-        e.createEvent(name,desc);
+        e.createEvent(name,desc,loc,eventYear,eventMonth,eventDay,eventHour,eventMinute);
+        handleUpload(mCover);
         finish();
+        }
     }
 
 }

@@ -9,12 +9,15 @@
     <EditText
         android:id="@+id/editTextTextPersonName5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
+        android:background="#00FFFFFF"
         android:ems="10"
         android:hint="Event Name"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -23,10 +26,12 @@
         android:layout_width="281dp"
         android:layout_height="83dp"
         android:layout_marginTop="40dp"
+        android:onClick="chooseCover"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/ic_menu_gallery"
+        tools:srcCompat="@drawable/ic_menu_gallery" />
 
     <TextView
         android:id="@+id/textView2"
@@ -41,46 +46,50 @@
     <EditText
         android:id="@+id/editTextTextPersonName8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
         android:ems="10"
         android:hint="Description"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
 
     <TextView
         android:id="@+id/Dateid"
         android:layout_width="210dp"
-        android:layout_height="47dp"
+        android:layout_height="35dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="Set Date"
         android:text="Set Date"
-        android:textColor="#a0a0a0"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
 
     <TextView
         android:id="@+id/Hourid"
         android:layout_width="210dp"
-        android:layout_height="47dp"
+        android:layout_height="35dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="Set Hour"
         android:text="Set Hour"
-        android:textColor="#a0a0a0"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Dateid" />
 
@@ -94,5 +103,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName6"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
+        android:ems="10"
+        android:hint="Location"
+        android:inputType="textPersonName"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@+id/Hourid"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
