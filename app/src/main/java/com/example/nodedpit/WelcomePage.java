@@ -16,7 +16,6 @@ public class WelcomePage extends AppCompatActivity {
     private static final String TAG = "WelcomePage";
     Button SignUp;
     Button LogIn;
-    Button Test;
     private long backPressedTime;
     private Toast backToast;
 
@@ -24,7 +23,6 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
-
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean login = prefs.getBoolean("login", false);
@@ -59,6 +57,7 @@ public class WelcomePage extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     @Override

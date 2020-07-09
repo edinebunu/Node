@@ -57,9 +57,13 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         nextBtn = (Button) findViewById(R.id.button2);
 
+        final LoadingDialog loadingDialog = new LoadingDialog(SignUpActivity.this);
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingDialog.startLoadingDialog();
+                nextBtn.setEnabled(false);
                 mName = (EditText) findViewById(R.id.editTextTextPersonName3);
                 mLastName = (EditText) findViewById(R.id.editTextTextPersonName2);
                 mEmail = (EditText) findViewById(R.id.editTextTextPersonName);

@@ -91,22 +91,22 @@ public class CreateEvent extends AppCompatActivity {
                 Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
 
                 if(day <10 && month < 10) {
-                    String date = "0" + day + "/" + "0" + month + "/" + year;
+                    String date = "Date: " + "0" + day + "/" + "0" + month + "/" + year;
                     mDisplayDate.setText(date);
                 }
 
                 else if(day < 10) {
-                    String date = "0" + day + "/" + month + "/" + year;
+                    String date = "Date: " + "0" + day + "/" + month + "/" + year;
                     mDisplayDate.setText(date);
                 }
 
                 else if(month < 10) {
-                    String date = day + "/" + "0" + month + "/" + year;
+                    String date = "Date: " + day + "/" + "0" + month + "/" + year;
                     mDisplayDate.setText(date);
                 }
 
                 else {
-                    String date = day + "/" + month + "/" + year;
+                    String date = "Date: " + day + "/" + month + "/" + year;
                     mDisplayDate.setText(date);
                 }
             }
