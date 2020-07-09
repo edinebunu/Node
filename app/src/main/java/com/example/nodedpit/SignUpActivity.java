@@ -57,13 +57,9 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         nextBtn = (Button) findViewById(R.id.button2);
 
-        final LoadingDialog loadingDialog = new LoadingDialog(SignUpActivity.this);
-
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingDialog.startLoadingDialog();
-                nextBtn.setEnabled(false);
                 mName = (EditText) findViewById(R.id.editTextTextPersonName3);
                 mLastName = (EditText) findViewById(R.id.editTextTextPersonName2);
                 mEmail = (EditText) findViewById(R.id.editTextTextPersonName);
@@ -99,6 +95,8 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    final LoadingDialog loadingDialog = new LoadingDialog(SignUpActivity.this);
+                                    loadingDialog.startLoadingDialog();
                                     // Sign in success, update UI with the signed-in user's information
                                     //Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
