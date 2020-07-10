@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nodedpit.Firebsae.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,6 +56,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.desc.setText((CharSequence) this.desc.get(position));
         holder.name.setText((CharSequence)this.names.get(position));
+
+        holder.going.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                e.goingButtonPressed(ids.get(position),currentUser.getUid());
+            }
+        });
+
+        holder.interested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                e.interestedButtonPressed(ids.get(position),currentUser.getUid());
+            }
+        });
 
         final String mDocumentName = this.ids.get(position);
 
@@ -137,6 +158,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView coverImage;
         CircleImageView profilePicture;
         ConstraintLayout parentLayout;
+        Button going;
+        Button interested;
 
         public ViewHolder(View itemView)
         {
@@ -146,6 +169,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             parentLayout = itemView.findViewById(R.id.parentLayout);
             coverImage = itemView.findViewById(R.id.imageView2);
             profilePicture = itemView.findViewById(R.id.profile_image);
+            going = itemView.findViewById(R.id.button3);
+            interested = itemView.findViewById(R.id.button4);
+
+
         }
     }
 }

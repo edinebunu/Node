@@ -130,4 +130,58 @@ public class Event {
                 });
     }
 
+    public void goingButtonPressed(final String uid, final String userId){
+
+        db.collection("Events").document(uid).collection("GoingUsers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentName = document.getId();
+                                if(document.getId().equals(userId)){
+                                    db.collection("Events").document(uid)
+                                            .collection("GoingUsers").document(userId).delete();
+                                    return;
+                                }
+                            }
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("first", "Alan");
+                            db.collection("Events").document(uid)
+                                    .collection("GoingUsers").document(userId).set(user);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void interestedButtonPressed(final String uid, final String userId){
+        db.collection("Events").document(uid).collection("InterestedUsers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentName = document.getId();
+                                if(document.getId().equals(userId)){
+                                    db.collection("Events").document(uid)
+                                            .collection("InterestedUsers").document(userId).delete();
+                                    return;
+                                }
+                            }
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("first", "Alan");
+                            db.collection("Events").document(uid)
+                                    .collection("InterestedUsers").document(userId).set(user);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+
 }
