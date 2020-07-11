@@ -36,6 +36,7 @@ public class EventPageActivity extends AppCompatActivity {
     String mDocumentName;
 
     private ArrayList<String> mIds = new ArrayList<>();
+    private ArrayList<String> mIntIds = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -81,6 +82,7 @@ public class EventPageActivity extends AppCompatActivity {
         });
 
         getUsers();
+        getInterestedUsers();
     }
 
     public void getUsers()
@@ -94,7 +96,7 @@ public class EventPageActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mIds.add(document.getId());
                             }
-                            initRecyclerView();
+                            initGoingRecyclerView();
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -102,11 +104,39 @@ public class EventPageActivity extends AppCompatActivity {
                 });
     }
 
-    private void initRecyclerView() {
+    public void getInterestedUsers()
+    {
+        db.collection("Events").document(mDocumentName).collection("InterestedUsers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                mIntIds.add(document.getId());
+                            }
+                            initInterestedRecyclerView();
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void initGoingRecyclerView() {
 
         RecyclerView recyclerView = findViewById(R.id.GoingUsers);
         EventGoingListAdapter adapter = new EventGoingListAdapter(mIds, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    private void initInterestedRecyclerView() {
+
+        RecyclerView recyclerView = findViewById(R.id.InterestedUsers);
+        EventInterestedListAdapter adapter = new EventInterestedListAdapter(mIntIds, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
 }
