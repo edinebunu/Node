@@ -61,12 +61,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
-        getEventBuffer();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+         mNames.removeAll(mNames);
+         mDesc.removeAll(mDesc);
+         mIds.removeAll(mIds);
+
+         getEventBuffer();
     }
 
     public void getEventBuffer()
@@ -103,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.profileButton:
                 openProfile();
                 break;
+            case R.id.Meetings:
+                openMyEvents();
+                break;
             case R.id.SignOut:
                 SignOut();
                 break;
@@ -110,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void openMyEvents(){
+        Intent intent = new Intent(MainActivity.this, MyEvents.class);
+        intent.putExtra("UID",mUid);
+        startActivity(intent);
     }
 
     @Override
@@ -139,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initRecyclerView() {
-
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, mIds, this);
         recyclerView.setAdapter(adapter);

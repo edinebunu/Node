@@ -4,7 +4,9 @@
 
 <item android:id="@+id/Settings" android:title="Settings"/>
 
-<item android:id="@+id/Meetings" android:title="Meetings"/>
+    <item
+        android:id="@+id/Meetings"
+        android:title="My Events" />
 
 <item android:id="@+id/Upcoming" android:title="Big Upcoming Events"/>
 
