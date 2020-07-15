@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -171,10 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void SignOut() {
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("login", false);
-        editor.apply();
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent( MainActivity.this, WelcomePage.class);
         startActivity(intent);
         finish();

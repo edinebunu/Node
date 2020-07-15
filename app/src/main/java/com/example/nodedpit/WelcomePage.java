@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthSettings;
+import com.google.firebase.auth.FirebaseUser;
+
 public class WelcomePage extends AppCompatActivity {
 
 
@@ -18,6 +22,20 @@ public class WelcomePage extends AppCompatActivity {
     Button LogIn;
     private long backPressedTime;
     private Toast backToast;
+    FirebaseUser firebaseUser;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(firebaseUser != null) {
+            Intent intent = new Intent(WelcomePage.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +44,6 @@ public class WelcomePage extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean login = prefs.getBoolean("login", false);
-
-        if(login == false)
-            LogInActivity.PreferenceData.setUserLoggedInStatus(this,false);
-        else
-            LogInActivity.PreferenceData.setUserLoggedInStatus(this,true);
-
-        if(LogInActivity.PreferenceData.getUserLoggedInStatus(this)){
-            Intent intent = new Intent(WelcomePage.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
         SignUp = (Button) findViewById(R.id.signup);
 
