@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_id"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:background="#174609"
     android:elevation="4dp">
+
+    <!--    <Button-->
+    <!--        android:id="@+id/button10"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:drawableTop="@drawable/circle"-->
+    <!--        android:layout_marginStart="190dp"-->
+    <!--        android:forceHasOverlappingRendering="false"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="Button" />-->
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="245dp"
+        android:gravity="center"
+        android:onClick="swipeToRight"
+        android:rotation="180"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
 
 </androidx.appcompat.widget.Toolbar>

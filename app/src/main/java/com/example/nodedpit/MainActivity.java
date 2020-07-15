@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,7 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener {
 
     private DrawerLayout mDrawLayout;
 
@@ -36,15 +38,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String mUid;
     String mDocumentName;
+    RecyclerView recyclerView;
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
     private ArrayList<String> mIds = new ArrayList<>();
 
+    //private GestureDetector gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerView);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -58,11 +64,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawLayout, toolbar, R.string.open, R.string.close);
         mDrawLayout.addDrawerListener(toggle);
         toggle.syncState();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
-        mUid = intent.getStringExtra("UID");
+        mUid = mAuth.getCurrentUser().getUid();
+
+        View hView =  navigationView.getHeaderView(0);
+
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+//        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+       // this.gestureDetector = new GestureDetector(MainActivity.this, (GestureDetector.OnGestureListener) this);
+    }
+
+    public void swipeToRight(View view){
+        Intent intent = new Intent(this,MeetingsActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
     }
+//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
+//    {
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//            switch(direction)
+//            {
+//                case  ItemTouchHelper.LEFT:
+//                    Intent i = new Intent(MainActivity.this, MeetingsActivity.class);
+//                    startActivity(i);
+//                    break;
+//                case ItemTouchHelper.RIGHT:
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     protected void onStart() {
@@ -154,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, mIds, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -178,4 +219,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
 
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
 }

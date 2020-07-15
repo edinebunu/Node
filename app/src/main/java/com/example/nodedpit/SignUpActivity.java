@@ -166,7 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void handleUpload(Bitmap bitmap, final Intent intent){
         Log.d(TAG, "handleUpload: start");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,25, baos);
 
         try {
             String storageUid = FirebaseAuth.getInstance().getCurrentUser().getUid();

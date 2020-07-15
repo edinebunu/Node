@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.nodedpit.Firebsae.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,6 +39,7 @@ public class CreateEvent extends AppCompatActivity {
     private static final String TAG = "CreateEvent";
     public static final int PICK_IMAGE = 10101;
 
+    private FirebaseAuth mAuth;
 
     EditText mName ;
     EditText mDescription;
@@ -57,8 +60,11 @@ public class CreateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         Intent intent = getIntent();
-        mUid = intent.getStringExtra("UID");
+        mUid = currentUser.getUid();
 
         mDisplayDate = findViewById(R.id.Dateid);
         mDisplayDate.setPaintFlags(mDisplayDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -184,7 +190,7 @@ public class CreateEvent extends AppCompatActivity {
     private void handleUpload(Bitmap bitmap){
         Log.d(TAG, "handleUpload: start");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,25, baos);
 
         try {
             final StorageReference reference = FirebaseStorage.getInstance()
