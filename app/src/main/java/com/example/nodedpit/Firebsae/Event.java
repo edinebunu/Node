@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +34,7 @@ public class Event {
 
     public void createEvent(String name, String description, String location, int yy, int mm, int dd, int hh, int min, String uid)
     {
-        final String ideaID = UUID.randomUUID().toString();
+        //final String ideaID = UUID.randomUUID().toString();
 
         Map<String, Object> info = new HashMap<>();
         info.put("Name",name);

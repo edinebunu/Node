@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,6 +27,7 @@ public class MeetingsActivity extends AppCompatActivity {
     private ArrayList<String> mIds = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
 
+    private FirebaseAuth mAuth;
 
     private RecyclerView recyclerView;
 
@@ -33,6 +36,8 @@ public class MeetingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetings);
         recyclerView = findViewById(R.id.meetingsList);
+
+        getMeetingsBuffer();
     }
 
     public void swipeToLeft(View view){
@@ -50,8 +55,12 @@ public class MeetingsActivity extends AppCompatActivity {
 
     public void getMeetingsBuffer()
     {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Meetings")
+                .whereArrayContains("Invited", currentUser.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     private static final String TAG = "Event";
@@ -61,8 +70,6 @@ public class MeetingsActivity extends AppCompatActivity {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mNames.add(document.getString("Name"));
-                                mDesc.add(document.getString("Description"));
-                                mIds.add(document.getId());
 
                             }
                             initRecyclerView();
@@ -76,9 +83,10 @@ public class MeetingsActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, mIds, this);
+        MeetingsAdapter adapter = new MeetingsAdapter( mNames, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
 }

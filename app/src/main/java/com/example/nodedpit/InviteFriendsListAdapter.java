@@ -28,6 +28,7 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
     private static final String TAG = "RecyclerViewAdapter";
 
     private ArrayList<String> ids;
+    private ArrayList<String> invited = new ArrayList<>();
     private Context mContext;
 
     final Event e = new Event();
@@ -45,7 +46,7 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final GoingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final GoingViewHolder holder, final int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("Users").document(ids.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -72,16 +73,26 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
                 if(holder.checkBox.isChecked()) {
+                    invited.add(ids.get(position));
                     Toast.makeText(mContext, "Checked", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    if(invited.contains(ids.get(position))){
+                        invited.remove(ids.get(position));
+                    }
+                }
+                setInvited();
             }
-
         });
 
 
     }
 
+    public void setInvited(){
+        InvitedArray.setmInvited(invited);
+    }
 
     @Override
     public int getItemCount() {
