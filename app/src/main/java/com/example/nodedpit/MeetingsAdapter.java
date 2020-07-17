@@ -109,14 +109,13 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                         }
                     }
                 });
-
     }
 
     private void initRecyclerView( final MeetingsAdapter.GoingViewHolder holder,ArrayList<String> gids) {
 
         MeetingProfilePictureAdapter adapter = new MeetingProfilePictureAdapter( gids, this.mContext);
         holder.recyclerView.setAdapter(adapter);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(this.mContext));
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(this.mContext,LinearLayoutManager.HORIZONTAL,false));
     }
 
 

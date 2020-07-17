@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nodedpit.Firebsae.Event;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -46,16 +45,13 @@ public class MeetingProfilePictureAdapter extends RecyclerView.Adapter<MeetingPr
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final String myId = ids.get(position);
 
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
-
         try {
             e.setProfileImg(myId, holder.profilePicture);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -66,7 +62,6 @@ public class MeetingProfilePictureAdapter extends RecyclerView.Adapter<MeetingPr
 
         CircleImageView profilePicture;
         ConstraintLayout parentLayout;
-
 
         public GoingViewHolder(View itemView)
         {
