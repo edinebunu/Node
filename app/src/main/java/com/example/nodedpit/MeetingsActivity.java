@@ -41,6 +41,7 @@ public class MeetingsActivity extends AppCompatActivity {
     }
 
     public void swipeToLeft(View view){
+
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);

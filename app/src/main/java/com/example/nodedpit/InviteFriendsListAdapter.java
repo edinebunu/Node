@@ -87,7 +87,6 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
             }
         });
 
-
     }
 
     public void setInvited(){
