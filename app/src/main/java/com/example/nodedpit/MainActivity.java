@@ -28,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener {
 
     private DrawerLayout mDrawLayout;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String mUid;
     String mDocumentName;
     RecyclerView recyclerView;
+    CircleImageView drawerImage;
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
@@ -74,6 +77,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
 
        // this.gestureDetector = new GestureDetector(MainActivity.this, (GestureDetector.OnGestureListener) this);
+
+//        ConstraintLayout header = (ConstraintLayout) findViewById(R.id.headerLayout);
+//        View mView = getLayoutInflater().inflate(R.layout.header, null);
+
+//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = inflater.inflate(R.layout.header, null);
+//        DrawerLayout d = (DrawerLayout) findViewById(R.id.drawer);
+//
+//
+//        drawerImage = findViewById(R.id.profile_image);
+//
+//        UserProfile e = new UserProfile();
+//        try {
+//            e.getProfileImg(mUid, drawerImage);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+
+
     }
 
     public void swipeToRight(View view){
