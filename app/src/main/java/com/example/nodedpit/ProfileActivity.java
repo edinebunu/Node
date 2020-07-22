@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
                         String firstName = documentSnapshot.getString("Name");
                         String lastName = documentSnapshot.getString("LastName");
 
-                        nameView.setText(firstName + lastName);
+                        nameView.setText(firstName + " " + lastName);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
