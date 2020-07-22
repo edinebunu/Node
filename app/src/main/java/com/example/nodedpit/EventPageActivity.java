@@ -126,7 +126,6 @@ public class EventPageActivity extends AppCompatActivity {
                         if(smt.size()>2)
                             chat.smoothScrollToPosition(smt.size() - 1);
 
-
                         Toast.makeText(EventPageActivity.this, "idfk", Toast.LENGTH_SHORT).show();
                     }});
 
