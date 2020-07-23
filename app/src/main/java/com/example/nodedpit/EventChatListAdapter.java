@@ -11,9 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nodedpit.Firebsae.Event;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -21,15 +20,24 @@ import java.util.ArrayList;
 public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdapter.GoingViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    private final String mUid = currentUser.getUid();
+
     private ArrayList<String> ids;
+    private ArrayList<String> messages;
+    private ArrayList<String> messagesId;
     private Context mContext;
 
     final Event e = new Event();
     String eventName;
 
-    public EventChatListAdapter(ArrayList<String> ids,String eventName, Context mContext) {
+    public EventChatListAdapter(ArrayList<String> ids,ArrayList<String> messages,ArrayList<String> messagesId, String eventName, Context mContext) {
         this.mContext = mContext;
         this.ids = ids;
+        this.messages = messages;
+        this.messagesId = messagesId;
         this.eventName = eventName;
     }
 
@@ -41,22 +49,20 @@ public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final EventChatListAdapter.GoingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final EventChatListAdapter.GoingViewHolder holder, final int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("EventChat").document(eventName).collection("Chat").document(ids.get(position))
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.msg.setText(documentSnapshot.getString("Message"));
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
+                        if(messagesId.get(position).equals(mUid))
+                        {
+                            holder.mMsg.setText(messages.get(position));
+                            holder.mMsg.setVisibility(View.VISIBLE);
+                            holder.msg.setVisibility(View.GONE);
+                        }
+                          else  {
+                              holder.msg.setText(messages.get(position));
+                            holder.msg.setVisibility(View.VISIBLE);
+                            holder.mMsg.setVisibility(View.GONE);
+                        }
 
     }
 
@@ -69,14 +75,15 @@ public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdap
     public class GoingViewHolder extends RecyclerView.ViewHolder{
 
         TextView msg;
+        TextView mMsg;
         ConstraintLayout parentLayout;
-
-
         public GoingViewHolder(View itemView)
         {
             super(itemView);
             msg = itemView.findViewById(R.id.chat_msg);
             parentLayout = itemView.findViewById(R.id.chat_item);
+            mMsg = itemView.findViewById(R.id.self_msg);
         }
+
     }
 }

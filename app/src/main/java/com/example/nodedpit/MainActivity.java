@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
 
        // this.gestureDetector = new GestureDetector(MainActivity.this, (GestureDetector.OnGestureListener) this);
+        
     }
 
     public void swipeToRight(View view){
