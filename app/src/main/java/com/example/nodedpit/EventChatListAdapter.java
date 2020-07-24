@@ -15,7 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdapter.GoingViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
@@ -56,12 +59,26 @@ public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdap
                         {
                             holder.mMsg.setText(messages.get(position));
                             holder.mMsg.setVisibility(View.VISIBLE);
+                            holder.imgRight.setVisibility(View.VISIBLE);
                             holder.msg.setVisibility(View.GONE);
+                            holder.imgLeft.setVisibility(View.GONE);
+                            try {
+                                e.setProfileImg(messagesId.get(position),holder.imgRight);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                           else  {
                               holder.msg.setText(messages.get(position));
                             holder.msg.setVisibility(View.VISIBLE);
+                            holder.imgLeft.setVisibility(View.VISIBLE);
                             holder.mMsg.setVisibility(View.GONE);
+                            holder.imgRight.setVisibility(View.GONE);
+                            try {
+                                e.setProfileImg(messagesId.get(position),holder.imgLeft);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                         }
 
     }
@@ -77,12 +94,16 @@ public class EventChatListAdapter extends RecyclerView.Adapter<EventChatListAdap
         TextView msg;
         TextView mMsg;
         ConstraintLayout parentLayout;
+        CircleImageView imgLeft;
+        CircleImageView imgRight;
         public GoingViewHolder(View itemView)
         {
             super(itemView);
             msg = itemView.findViewById(R.id.chat_msg);
             parentLayout = itemView.findViewById(R.id.chat_item);
             mMsg = itemView.findViewById(R.id.self_msg);
+            imgLeft = itemView.findViewById(R.id.chat_left_img);
+            imgRight = itemView.findViewById(R.id.chat_right_img);
         }
 
     }

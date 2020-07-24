@@ -20,7 +20,6 @@ public class Meetings {
 
     public void createMeet(String name, ArrayList<String> invitedPeople, String hostUid) {
 
-       // final String ideaID = UUID.randomUUID().toString();
             Map<String, Object> info = new HashMap<>();
             info.put("Invited", invitedPeople);
             info.put("Name", name);
