@@ -45,7 +45,7 @@ public class CreateMeeting extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TextView mDisplayHour;
     private TimePickerDialog.OnTimeSetListener mHourSetListener;
-    int eventYear, eventMonth, eventDay, eventHour, eventMinute;
+    int eventYear = -1, eventMonth = -1, eventDay = -1, eventHour = -1, eventMinute = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class CreateMeeting extends AppCompatActivity {
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+
                 eventYear = year;
                 eventMonth = month;
                 eventDay = day;
@@ -189,8 +190,26 @@ public class CreateMeeting extends AppCompatActivity {
 
         ArrayList<String> invited = InvitedArray.getmInvited();
         Meetings m = new Meetings();
-        m.createMeet(mName.getText().toString(), invited, currentUser.getUid());
-        finish();
+
+        if(eventYear != -1 && eventMonth != -1 && eventDay != -1 && eventHour != -1 && eventMinute!= -1)
+        {
+            m.createMeet(mName.getText().toString(), invited, currentUser.getUid(),eventYear,eventMonth,eventDay,eventHour,eventMinute);
+            finish();
+        }
+
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

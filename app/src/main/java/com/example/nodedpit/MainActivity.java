@@ -72,12 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUid = mAuth.getCurrentUser().getUid();
 
         View hView =  navigationView.getHeaderView(0);
-
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-       // this.gestureDetector = new GestureDetector(MainActivity.this, (GestureDetector.OnGestureListener) this);
-        
     }
 
     public void swipeToRight(View view){
@@ -86,27 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
     }
-//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
-//    {
-//        @Override
-//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//            return false;
-//        }
-//
-//        @Override
-//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//
-//            switch(direction)
-//            {
-//                case  ItemTouchHelper.LEFT:
-//                    Intent i = new Intent(MainActivity.this, MeetingsActivity.class);
-//                    startActivity(i);
-//                    break;
-//                case ItemTouchHelper.RIGHT:
-//                    break;
-//            }
-//        }
-//    };
+
 
     @Override
     protected void onStart() {
@@ -159,10 +133,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.SignOut:
                 SignOut();
                 break;
+            case R.id.PastMeetings:
+                pastMeetings();
+                break;
+            case R.id.Past:
+                past();
+                break;
+
         }
 
         mDrawLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void past(){
+        Intent intent = new Intent(MainActivity.this, PastMeetingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void pastMeetings(){
+        Intent intent = new Intent(MainActivity.this, PastEventsActivity.class);
+        startActivity(intent);
     }
 
     private void openMyEvents(){

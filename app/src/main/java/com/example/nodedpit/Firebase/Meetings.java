@@ -18,14 +18,19 @@ public class Meetings {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-    public void createMeet(String name, ArrayList<String> invitedPeople, String hostUid) {
+    public void createMeet(String name, ArrayList<String> invitedPeople, String hostUid, int year, int month, int day, int hour, int minute) {
 
             Map<String, Object> info = new HashMap<>();
             info.put("Invited", invitedPeople);
             info.put("Name", name);
             info.put("HostId", hostUid);
+            info.put("Year", year);
+        info.put("Month", month);
+        info.put("Day", day);
+        info.put("Hour", hour);
+        info.put("Minute", minute);
 
-            db.collection("Meetings").document(name)
+        db.collection("Meetings").document(name)
                     .set(info)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
