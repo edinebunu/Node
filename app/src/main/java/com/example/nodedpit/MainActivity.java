@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
@@ -72,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUid = mAuth.getCurrentUser().getUid();
 
         View hView =  navigationView.getHeaderView(0);
+    }
+
+    public void openQr(View view){
+        Intent intent = new Intent(this, QrCodeScannerActivity.class);
+        startActivity(intent);
     }
 
     public void swipeToRight(View view){
@@ -212,6 +220,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
+
+    public void scanButton(View view){
+        //Intent intent = new Intent( MainActivity.this, QrCodeScannerActivity.class);
+        //startActivity(intent);
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.initiateScan();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(intentResult != null)
+        {
+            if(intentResult.getContents() == null)
+            {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Intent intent = new Intent( this, EventPageActivity.class);
+                intent.putExtra("EventName", intentResult.getContents());
+                startActivity(intent);
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
