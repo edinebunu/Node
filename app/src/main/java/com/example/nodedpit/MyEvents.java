@@ -28,7 +28,6 @@ public class MyEvents extends AppCompatActivity {
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
-
     }
 
     @Override

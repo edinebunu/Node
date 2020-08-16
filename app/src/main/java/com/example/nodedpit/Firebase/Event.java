@@ -1,4 +1,4 @@
-package com.example.nodedpit.Firebsae;
+package com.example.nodedpit.Firebase;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,8 +1,9 @@
-package com.example.nodedpit.Firebsae;
+package com.example.nodedpit.Firebase;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfile {
 
     private static final String TAG = "UserProfile";
+    EditText bom;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://node-85fa5.appspot.com/");

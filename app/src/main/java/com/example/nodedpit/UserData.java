@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nodedpit.Firebsae.UserProfile;
+import com.example.nodedpit.Firebase.UserProfile;
 
 import java.util.Calendar;
 
@@ -91,7 +91,7 @@ public class UserData extends AppCompatActivity {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
 
-                    if(day <10 && month < 10) {
+                if(day <10 && month < 10) {
                     String date = "0" + day + "/" + "0" + month + "/" + year;
                     mDisplayDate.setText(date);
                 }

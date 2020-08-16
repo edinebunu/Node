@@ -20,7 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nodedpit.Firebsae.Event;
+import com.example.nodedpit.Firebase.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,9 +84,6 @@ public class CreateEvent extends AppCompatActivity {
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
-                eventYear = year;
-                eventMonth = month;
-                eventDay = day;
             };
         });
 
@@ -95,6 +92,10 @@ public class CreateEvent extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
+
+                eventYear = year;
+                eventMonth = month;
+                eventDay = day;
 
                 if(day <10 && month < 10) {
                     String date = "Date: " + "0" + day + "/" + "0" + month + "/" + year;
@@ -132,6 +133,8 @@ public class CreateEvent extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int min) {
                         Log.d(TAG, "onTimeSet: date: " + hour + ":" + min );
+                        eventHour = hour;
+                        eventMinute = min;
 
                         if(hour < 10 && min < 10) {
                             String date = "Time: " + "0" + hour + ":" + "0" + min;
@@ -153,8 +156,6 @@ public class CreateEvent extends AppCompatActivity {
                 },mHour,mMin, true);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
                 dialog.show();
-                eventHour = mHour;
-                eventMinute = mMin;
             };
         });
     }

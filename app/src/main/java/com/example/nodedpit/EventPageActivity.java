@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nodedpit.Firebsae.Event;
+import com.example.nodedpit.Firebase.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,6 +55,8 @@ public class EventPageActivity extends AppCompatActivity {
 
     private ArrayList<String> mIds = new ArrayList<>();
     private ArrayList<String> mIntIds = new ArrayList<>();
+
+    final ArrayList<String> smt = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -103,61 +104,65 @@ public class EventPageActivity extends AppCompatActivity {
 
         getUsers();
         getInterestedUsers();
-        getChat();
     }
 
-    final ArrayList<String> smt = new ArrayList<>();
-
-    private void getChat() {
-
-        smt.clear();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getChat();
 
         db.collection("EventChat").document(mDocumentName).collection("Chat")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        assert queryDocumentSnapshots != null;
+                        final ArrayList<String> messages = new ArrayList<>();
+                        final ArrayList<String> messageId = new ArrayList<>();
                         smt.clear();
+                        assert queryDocumentSnapshots != null;
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             smt.add(document.getId());
+                            messages.add(document.getString("Message"));
+                            messageId.add(document.getString("Host"));
                         }
-                        updateChat(smt);
-                        if(smt.size()>2)
-                            chat.smoothScrollToPosition(smt.size() - 1);
-
-
-                        Toast.makeText(EventPageActivity.this, "idfk", Toast.LENGTH_SHORT).show();
+                        updateChat(smt,messages,messageId);
                     }});
+}
 
 
-//        db.collection("EventChat").document(mDocumentName).collection("Chat")
-//                .orderBy("Timestamp", Query.Direction.ASCENDING)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                smt.add(document.getId());
-//                            }
-//                            updateChat(smt);
-//                            if(smt.size()>2)
-//                            chat.smoothScrollToPosition(smt.size()-1);
-//                            Toast.makeText(EventPageActivity.this, "imm", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//
-//                    }
-//                });
+    private void getChat() {
+        final ArrayList<String> messages = new ArrayList<>();
+        final ArrayList<String> messageId = new ArrayList<>();
 
+        db.collection("EventChat").document(mDocumentName).collection("Chat")
+                .orderBy("Timestamp", Query.Direction.ASCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            smt.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                smt.add(document.getId());
+                                messages.add(document.getString("Message"));
+                                messageId.add(document.getString("Host"));
+                            }
+                            updateChat(smt,messages,messageId);
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
     }
 
-    public void updateChat(ArrayList<String> smt){
-        EventChatListAdapter adapter = new EventChatListAdapter(smt, mDocumentName, this);
+    public void updateChat(ArrayList<String> smt, ArrayList<String> messages, ArrayList<String> messageId){
+        EventChatListAdapter adapter = new EventChatListAdapter(smt,messages,messageId, mDocumentName, this);
         chat.setAdapter(adapter);
         chat.setLayoutManager(new LinearLayoutManager(this));
+        if(smt.size()>2)
+            chat.smoothScrollToPosition(smt.size());
     }
 
 
@@ -215,11 +220,6 @@ public class EventPageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
-    public void scrolToBot(ArrayList<String> smt)
-    {
-        chat.smoothScrollToPosition(smt.size()-1);
-    }
-
     public void sendMessage(View view)
     {
         ConstraintLayout mainLayout;
@@ -228,7 +228,6 @@ public class EventPageActivity extends AppCompatActivity {
 
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
@@ -242,7 +241,6 @@ public class EventPageActivity extends AppCompatActivity {
         messageEntry.put("Host", currentUser.getUid());
         messageEntry.put("Message", mtMessage.getText().toString());
         messageEntry.put("Timestamp",new Date());
-
 
         db.collection("EventChat").document(mDocumentName).collection("Chat")
                 .add(messageEntry)
@@ -259,6 +257,8 @@ public class EventPageActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+
+        mtMessage.setText("");
     }
 
 }

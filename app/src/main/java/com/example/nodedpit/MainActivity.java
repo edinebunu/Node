@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,8 +26,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener {
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String mUid;
     String mDocumentName;
     RecyclerView recyclerView;
+    CircleImageView drawerImage;
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
@@ -69,11 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUid = mAuth.getCurrentUser().getUid();
 
         View hView =  navigationView.getHeaderView(0);
+    }
 
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-       // this.gestureDetector = new GestureDetector(MainActivity.this, (GestureDetector.OnGestureListener) this);
+    public void openQr(View view){
+        Intent intent = new Intent(this, QrCodeScannerActivity.class);
+        startActivity(intent);
     }
 
     public void swipeToRight(View view){
@@ -82,27 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
     }
-//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
-//    {
-//        @Override
-//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//            return false;
-//        }
-//
-//        @Override
-//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//
-//            switch(direction)
-//            {
-//                case  ItemTouchHelper.LEFT:
-//                    Intent i = new Intent(MainActivity.this, MeetingsActivity.class);
-//                    startActivity(i);
-//                    break;
-//                case ItemTouchHelper.RIGHT:
-//                    break;
-//            }
-//        }
-//    };
+
 
     @Override
     protected void onStart() {
@@ -155,10 +141,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.SignOut:
                 SignOut();
                 break;
+            case R.id.PastMeetings:
+                pastMeetings();
+                break;
+            case R.id.Past:
+                past();
+                break;
+
         }
 
         mDrawLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void past(){
+        Intent intent = new Intent(MainActivity.this, PastMeetingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void pastMeetings(){
+        Intent intent = new Intent(MainActivity.this, PastEventsActivity.class);
+        startActivity(intent);
     }
 
     private void openMyEvents(){
@@ -217,6 +220,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
+
+    public void scanButton(View view){
+        //Intent intent = new Intent( MainActivity.this, QrCodeScannerActivity.class);
+        //startActivity(intent);
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.initiateScan();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(intentResult != null)
+        {
+            if(intentResult.getContents() == null)
+            {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Intent intent = new Intent( this, EventPageActivity.class);
+                intent.putExtra("EventName", intentResult.getContents());
+                startActivity(intent);
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
