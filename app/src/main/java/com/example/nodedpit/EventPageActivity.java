@@ -160,28 +160,6 @@ public class EventPageActivity extends AppCompatActivity {
         chat.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    float x1,x2,y1,y2;
-//    public boolean onTouchEvent(MotionEvent touchEvent){
-//        switch(touchEvent.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//                x1 = touchEvent.getX();
-//                y1 = touchEvent.getY();
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                x2 = touchEvent.getX();
-//                y2 = touchEvent.getY();
-//                if(x1 < x2){
-//                    Intent i = new Intent(EventPageActivity.this, MeetingsActivity.class);
-//                    startActivity(i);
-//                }else if(x1 > x2){
-//                    //other direction
-//                    Intent i = new Intent(EventPageActivity.this, MeetingsActivity.class);
-//                    startActivity(i);
-//                }
-//                break;
-//        }
-//        return false;
-//    }
 
     public void getUsers()
     {
@@ -226,7 +204,7 @@ public class EventPageActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.GoingUsers);
         EventGoingListAdapter adapter = new EventGoingListAdapter(mIds, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
     private void initInterestedRecyclerView() {
@@ -234,7 +212,7 @@ public class EventPageActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.InterestedUsers);
         EventInterestedListAdapter adapter = new EventInterestedListAdapter(mIntIds, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
     public void scrolToBot(ArrayList<String> smt)

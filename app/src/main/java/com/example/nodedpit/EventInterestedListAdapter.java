@@ -4,16 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nodedpit.Firebsae.Event;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -45,19 +41,6 @@ public class EventInterestedListAdapter extends RecyclerView.Adapter<EventIntere
     public void onBindViewHolder(@NonNull final EventInterestedListAdapter.InterestedViewHolder holder, int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("Users").document(ids.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.name.setText(documentSnapshot.getString("Name"));
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
         String myId = ids.get(position);
 
         try {
@@ -75,7 +58,7 @@ public class EventInterestedListAdapter extends RecyclerView.Adapter<EventIntere
 
     public class InterestedViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name;
+
         CircleImageView profilePicture;
         ConstraintLayout parentLayout;
 
@@ -83,7 +66,6 @@ public class EventInterestedListAdapter extends RecyclerView.Adapter<EventIntere
         public InterestedViewHolder(View itemView)
         {
             super(itemView);
-            name = itemView.findViewById(R.id.textView13);
             parentLayout = itemView.findViewById(R.id.myEventGoingMember);
             profilePicture = itemView.findViewById(R.id.miniProfileImage);
         }
