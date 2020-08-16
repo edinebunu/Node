@@ -9,8 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nodedpit.Firebsae.Event;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.nodedpit.Firebase.Event;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class EventGoingListAdapter extends RecyclerView.Adapter<EventGoingListAd
 
     @Override
     public void onBindViewHolder(@NonNull final GoingViewHolder holder, int position) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
         String myId = ids.get(position);
 
