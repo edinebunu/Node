@@ -19,16 +19,15 @@
     <!--        android:text="Button" />-->
 
     <ImageView
-        android:layout_width="110dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-10dp"
-        android:gravity="center"
+        android:gravity="center|start"
         android:src="@drawable/nodelogo" />
 
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="205dp"
+        android:layout_marginHorizontal="205dp"
         android:gravity="center"
         android:onClick="swipeToRight"
         android:rotation="180"
