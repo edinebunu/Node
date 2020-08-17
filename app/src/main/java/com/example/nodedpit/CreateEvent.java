@@ -9,10 +9,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,19 +22,31 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nodedpit.Firebase.Event;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateEvent extends AppCompatActivity {
 
@@ -172,18 +186,21 @@ public class CreateEvent extends AppCompatActivity {
         Log.d(TAG, "onActivityResult: start");
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE)
+        if(requestCode == PICK_IMAGE && data != null)
         {
             try {
                 InputStream inputStream = getContentResolver()
                         .openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 mCover = bitmap;
+                ImageView cover = findViewById(R.id.imageView);
+                cover.setImageBitmap(bitmap);
             }
             catch(FileNotFoundException e)
             {
                 e.printStackTrace();
             }
+
         }
     }
 
@@ -233,10 +250,109 @@ public class CreateEvent extends AppCompatActivity {
 
         if(!name.equals("") && !desc.equals("") && !loc.equals(""))
         {
-        Event e = new Event();
-        e.createEvent(name,desc,loc,eventYear,eventMonth,eventDay,eventHour,eventMinute,mUid);
+        //Event e = new Event();
+        CreateEventDb(name,desc,loc,eventYear,eventMonth,eventDay,eventHour,eventMinute,mUid);
         handleUpload(mCover);
         finish();
+
         }
     }
+
+
+
+    public void CreateEventDb(final String name, String description, String location, int yy, int mm, int dd, int hh, int min, String uid)
+    {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //final String ideaID = UUID.randomUUID().toString();
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("Name",name);
+        info.put("Description",description);
+        info.put("Location", location);
+        info.put("DateYear", yy);
+        info.put("DateMonth", mm);
+        info.put("DateDay",dd);
+        info.put("DateHour", hh);
+        info.put("DateMin", min);
+        info.put("Timestamp",new Date());
+        info.put("HostId",uid);
+
+
+        db.collection("Events").document()
+                .set(info)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        final String[] currentEventId = {null};
+
+                        db.collection("Events")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                        if (task.isSuccessful()) {
+
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                if(document.getString("Name").equals(name)) {
+                                                    currentEventId[0] = document.getId();
+                                                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                                                    try {
+                                                        BitMatrix bitMatrix = qrCodeWriter.encode(currentEventId[0], BarcodeFormat.QR_CODE, 400, 400);
+                                                        Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.RGB_565);
+
+                                                        for (int x = 0; x < 400; x++) {
+                                                            for (int y = 0; y < 400; y++) {
+                                                                bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                                                            }
+                                                        }
+
+                                                        saveImage(bitmap);
+
+                                                    } catch (WriterException | IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+                                            }
+                                        } else {
+                                            Log.w(TAG, "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+
+
+
+
+
+    private void saveImage(Bitmap bitmap) throws IOException {
+
+        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title" , "Smt");  // Saves the image.
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
+
+

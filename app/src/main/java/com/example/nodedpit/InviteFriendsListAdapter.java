@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -76,7 +75,6 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
 
                 if(holder.checkBox.isChecked()) {
                     invited.add(ids.get(position));
-                    Toast.makeText(mContext, "Checked", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if(invited.contains(ids.get(position))){

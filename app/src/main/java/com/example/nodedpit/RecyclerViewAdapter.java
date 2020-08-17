@@ -168,6 +168,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = itemView.findViewById(R.id.textView4);
             desc = itemView.findViewById(R.id.description);
             parentLayout = itemView.findViewById(R.id.parentLayout);
+            parentLayout.setClipToOutline(true);
             coverImage = itemView.findViewById(R.id.imageView2);
             profilePicture = itemView.findViewById(R.id.profile_image);
             going = itemView.findViewById(R.id.button3);

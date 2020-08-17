@@ -5,9 +5,11 @@
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:layout_marginStart="5dp"
     android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginBottom="5dp"
-    android:background="#086E0A">
+    android:background="@drawable/layout_bg">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -38,7 +40,7 @@
         android:id="@+id/view5"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="#1E1E1E"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +48,13 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="4dp"
-        android:text="I"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/interested"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view5" />
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView4"
@@ -60,7 +63,7 @@
         android:layout_marginStart="8dp"
         android:text="Title"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -69,7 +72,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
         android:text="Date"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,11 +79,12 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="4dp"
-        android:text="G"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button4" />
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/evgo"
+        app:layout_constraintBottom_toBottomOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="@+id/button4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

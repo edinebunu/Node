@@ -2,6 +2,8 @@ package com.example.nodedpit.Firebase;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -17,10 +19,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +38,7 @@ public class Event {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void createEvent(String name, String description, String location, int yy, int mm, int dd, int hh, int min, String uid)
+    public void createEvent(final String name, String description, String location, int yy, int mm, int dd, int hh, int min, String uid)
     {
         //final String ideaID = UUID.randomUUID().toString();
 
@@ -56,6 +62,43 @@ public class Event {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
+                        final String[] currentEventId = {null};
+
+                        db.collection("Events")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                        if (task.isSuccessful()) {
+
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                if(document.getString("Name").equals(name)) {
+                                                    currentEventId[0] = document.getId();
+                                                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                                                    try {
+                                                        BitMatrix bitMatrix = qrCodeWriter.encode(currentEventId[0], BarcodeFormat.QR_CODE, 400, 400);
+                                                        Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.RGB_565);
+
+                                                        for (int x = 0; x < 400; x++) {
+                                                            for (int y = 0; y < 400; y++) {
+                                                                bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                                                            }
+                                                        }
+
+                                                    }
+                                                    catch (WriterException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            Log.w(TAG, "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -88,27 +131,27 @@ public class Event {
                 });
     }
 
-    public void getEventBuffer(final ArrayList<String> name, final ArrayList<String> desc)
-    {
-        db.collection("Events")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    private static final String TAG = "Event";
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                name.add(document.getString("Name"));
-                                desc.add(document.getString("Description"));
+    private void saveImage(Bitmap finalBitmap) {
 
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root);
+        myDir.mkdirs();
+        String fname = "Image-" + "name" + ".jpg";
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete();
+        Log.i("LOAD", root + fname);
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
 
 
     public void setProfileImg(String uid, final CircleImageView view) throws IOException {

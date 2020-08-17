@@ -61,31 +61,27 @@ public class PastEventsActivity extends AppCompatActivity {
                             int minute = Calendar.getInstance().get(Calendar.MINUTE);
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                Integer a = Integer.parseInt( Objects.requireNonNull(document.get("DateYear").toString()));
                                 if(
-                                        Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) < year ||
-
+                                        Integer.parseInt( Objects.requireNonNull(document.get("DateYear").toString())) < year ||
 
                                         Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
                                             Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) < month ||
 
-
                                         Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
                                                 Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
                                                         Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) < day ||
-
 
                                                 Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
                                                         Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
                                                                 Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) == day &&
                                                                         Integer.parseInt(Objects.requireNonNull(document.get("DateHour").toString())) < hour ||
 
-
                                                 Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
                                                         Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
                                                                Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) == day &&
                                                                         Integer.parseInt(Objects.requireNonNull(document.get("DateHour").toString())) == hour &&
                                                                                 Integer.parseInt(Objects.requireNonNull(document.get("DateMin").toString())) < minute)
-
                                 {
                                 mNames.add(document.getString("Name"));
                                 mDesc.add(document.getString("Description"));

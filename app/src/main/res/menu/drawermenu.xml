@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/profileButton" android:title="Profile"/>
+    <item
+        android:id="@+id/profileButton"
+        android:title="Profile" />
 
     <item
         android:id="@+id/PastMeetings"
@@ -14,7 +16,9 @@
         android:id="@+id/Meetings"
         android:title="My Events" />
 
-<item android:id="@+id/AddEvent" android:title="Add Event"/>
+    <item
+        android:id="@+id/AddEvent"
+        android:title="Add Event" />
 
 <item android:id="@+id/SignOut" android:title="Sign Out"/>
 

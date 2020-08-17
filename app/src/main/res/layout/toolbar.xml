@@ -5,7 +5,7 @@
     android:id="@+id/toolbar_id"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#174609"
+    android:background="@color/colorGrey"
     android:elevation="4dp">
 
     <!--    <Button-->
@@ -19,9 +19,16 @@
     <!--        android:text="Button" />-->
 
     <ImageView
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-10dp"
+        android:gravity="center"
+        android:src="@drawable/nodelogo" />
+
+    <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="245dp"
+        android:layout_marginStart="205dp"
         android:gravity="center"
         android:onClick="swipeToRight"
         android:rotation="180"
