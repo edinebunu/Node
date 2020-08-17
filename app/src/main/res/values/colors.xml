@@ -4,4 +4,5 @@
     <color name="colorPrimary">#E6E6E6</color>
     <color name="colorAccent">#0C9332</color>
     <color name="colorGrey">#545454</color>
+    <color name="chatOther">#9b5fd4</color>
 </resources>
