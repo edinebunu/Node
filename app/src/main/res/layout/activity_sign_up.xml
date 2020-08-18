@@ -8,28 +8,29 @@
     >
 
     <View
-        android:id="@+id/view3"
+        android:id="@+id/view2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#45b421"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editTextTextPersonName4"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="275dp"
+        android:layout_height="55dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/roundedtext"
+        android:background="@drawable/blank"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         android:textAlignment="center"
-        android:textColorHint="#ffffff"
+        android:textColorHint="@color/colorPrimary"
+        android:textColorLink="#FFFFFF"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,11 +38,11 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="275dp"
+        android:layout_height="55dp"
         android:layout_marginTop="15dp"
         android:alpha="1"
-        android:background="@drawable/roundedtext"
+        android:background="@drawable/blank"
         android:ems="10"
         android:fontFamily="sans-serif"
         android:hint="Last Name"
@@ -57,10 +58,10 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="275dp"
+        android:layout_height="55dp"
         android:layout_marginTop="45dp"
-        android:background="@drawable/roundedtext"
+        android:background="@drawable/blank"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
@@ -74,15 +75,15 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="275dp"
+        android:layout_height="55dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/roundedtext"
+        android:background="@drawable/blank"
         android:ems="10"
         android:hint="E-Mail"
         android:inputType="textWebEmailAddress"
         android:textAlignment="center"
-        android:textColorHint="#ffffff"
+        android:textColorHint="@color/colorPrimary"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,18 +93,19 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="65dp"
+        android:buttonTint="#4CAF50"
         android:text="I agree with terms and conditions"
+        android:textColor="#4FB553"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundedtext"
-        android:text="Next"
+        android:layout_width="275dp"
+        android:layout_height="55dp"
+        android:background="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,17 +114,17 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/profile_image"
-    android:layout_width="120dp"
-    android:layout_height="120dp"
-    android:layout_marginTop="65dp"
-    android:src="@drawable/fui_ic_anonymous_white_24dp"
-    app:civ_border_color="#007506"
-    app:civ_border_width="1dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/view3"
-    android:onClick="handleImageClick"/>
+        android:id="@+id/profile_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="50dp"
+        android:onClick="handleImageClick"
+        android:src="@drawable/fui_ic_anonymous_white_24dp"
+        app:civ_border_color="#007506"
+        app:civ_border_width="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
