@@ -334,10 +334,6 @@ public class CreateEvent extends AppCompatActivity {
     }
 
 
-
-
-
-
     private void saveImage(Bitmap bitmap) throws IOException {
 
         MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title" , "Smt");  // Saves the image.

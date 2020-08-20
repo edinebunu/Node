@@ -1,6 +1,7 @@
 package com.example.nodedpit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +93,16 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                 notGoingButtonPressed(myId,currentUser.getUid());
             }
         });
+
+        holder.chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, MeetingsChatActivity.class);
+                intent.putExtra("Id",ids.get(position));
+                mContext.startActivity(intent);
+            }
+        });
+
 
         final ArrayList<String> goingIds = new ArrayList<>();
 
@@ -201,7 +212,9 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
         ConstraintLayout parentLayout;
         Button going;
         Button notGoing;
+        Button chat;
         RecyclerView recyclerView;
+
 
 
         public GoingViewHolder(View itemView)
@@ -213,6 +226,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
             going = itemView.findViewById(R.id.button7);
             notGoing = itemView.findViewById(R.id.button8);
             recyclerView = itemView.findViewById(R.id.profile_pictures_list);
+            chat = itemView.findViewById(R.id.chatBtn);
         }
     }
 }
