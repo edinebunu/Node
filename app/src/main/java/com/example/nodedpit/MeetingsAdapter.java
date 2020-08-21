@@ -120,6 +120,17 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                         }
                     }
                 });
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent( mContext, TaskListActivity.class);
+                intent.putExtra("EventName", ids.get(position));
+                mContext.startActivity(intent);
+
+            }
+        });
     }
 
     private void initRecyclerView( final MeetingsAdapter.GoingViewHolder holder,ArrayList<String> gids) {

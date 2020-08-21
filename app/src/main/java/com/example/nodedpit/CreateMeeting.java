@@ -52,6 +52,8 @@ public class CreateMeeting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
+        InvitedArray.clear();
+
         recyclerView = findViewById(R.id.inviteFriends);
         mName = findViewById(R.id.editTextTextPersonName7);
 
@@ -166,9 +168,7 @@ public class CreateMeeting extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mIds.add(document.getId());
-
                             }
-                           // mIds = InvitedArray.getmInvited();
                             initRecyclerView();
 
                         } else {
@@ -190,6 +190,7 @@ public class CreateMeeting extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         ArrayList<String> invited = InvitedArray.getmInvited();
+
         Meetings m = new Meetings();
 
         if(eventYear != -1 && eventMonth != -1 && eventDay != -1 && eventHour != -1 && eventMinute!= -1)
@@ -197,7 +198,7 @@ public class CreateMeeting extends AppCompatActivity {
             m.createMeet(mName.getText().toString(), invited, currentUser.getUid(),eventYear,eventMonth,eventDay,eventHour,eventMinute);
             finish();
         }
-
+        InvitedArray.clear();
     }
 
 }

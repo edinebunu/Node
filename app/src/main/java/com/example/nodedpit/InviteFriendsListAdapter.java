@@ -57,7 +57,6 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                     }
                 });
 
@@ -77,9 +76,7 @@ public class InviteFriendsListAdapter extends RecyclerView.Adapter<InviteFriends
                     invited.add(ids.get(position));
                 }
                 else{
-                    if(invited.contains(ids.get(position))){
-                        invited.remove(ids.get(position));
-                    }
+                    invited.remove(ids.get(position));
                 }
                 setInvited();
             }

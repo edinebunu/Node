@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MeetingsChatActivity"></activity>
+        <activity android:name=".CreateTaskActivity"></activity>
+        <activity android:name=".TaskListActivity" />
+        <activity android:name=".MeetingsChatActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
