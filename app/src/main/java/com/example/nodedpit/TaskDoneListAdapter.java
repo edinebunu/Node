@@ -28,7 +28,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>{
+public class TaskDoneListAdapter extends RecyclerView.Adapter<TaskDoneListAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -38,7 +38,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     final Event e = new Event();
 
-    public TaskListAdapter(ArrayList<String> ids, String name, Context mContext) {
+    public TaskDoneListAdapter(ArrayList<String> ids, String name, Context mContext) {
         this.ids = ids;
         this.meetingName = name;
         this.mContext = mContext;
@@ -46,7 +46,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     @NonNull
     @Override
-    public TaskListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TaskDoneListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item,parent,false);
         return new ViewHolder(view);
     }
@@ -59,31 +59,32 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    holder.desc.setText(documentSnapshot.getString("Task"));
-                    ArrayList<String> i = (ArrayList<String>) documentSnapshot.get("Assigned To");
+                holder.desc.setText(documentSnapshot.getString("Task"));
+                holder.checkBox.setChecked(true);
+                ArrayList<String> i = (ArrayList<String>) documentSnapshot.get("Assigned To");
 
-                    holder.name.setText("");
-                    DocumentReference dRef = db.collection("Users").document(i.get(0));
-                    dRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                holder.name.setText("");
+                DocumentReference dRef = db.collection("Users").document(i.get(0));
+                dRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        holder.name.append(" " + documentSnapshot.getString("Name"));
+                    }
+                });
+
+                for (int index = 1; index < i.size(); index++) {
+                    DocumentReference docRef = db.collection("Users").document(i.get(index));
+                    final int ind = index;
+
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             holder.name.append(" " + documentSnapshot.getString("Name"));
                         }
                     });
 
-                    for (int index = 1; index < i.size(); index++) {
-                        DocumentReference docRef = db.collection("Users").document(i.get(index));
-                        final int ind = index;
-
-                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                holder.name.append(" " + documentSnapshot.getString("Name"));
-                            }
-                        });
-
-                    }
                 }
+            }
         });
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

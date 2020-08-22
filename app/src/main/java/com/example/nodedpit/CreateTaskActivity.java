@@ -80,6 +80,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             Map<String, Object> taskEntry = new HashMap<>();
             taskEntry.put("Assigned To", mIds);
             taskEntry.put("Task", taskContent);
+            taskEntry.put("isDone", false);
 
             db.collection("TaskList").document(meetingName).collection("Tasks")
                     .add(taskEntry)

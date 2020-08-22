@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="Task List"
         android:textColor="@android:color/black"
         android:textSize="18dp"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:text="TO DO"
         android:textAlignment="textEnd"
         android:textColor="@android:color/black"
@@ -58,8 +58,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="380dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -68,16 +68,17 @@
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="DONE"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView3" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/doneitems"
         android:layout_width="380dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="@+id/recyclerView3"
         app:layout_constraintStart_toStartOf="@+id/recyclerView3"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />

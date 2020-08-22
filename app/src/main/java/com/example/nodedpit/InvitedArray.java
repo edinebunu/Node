@@ -14,6 +14,15 @@ public class InvitedArray {
         mInvited.clear();
     }
 
+    public static void add(String item)
+    {
+        mInvited.add(item);
+    }
+
+    public static void remove(String item){
+        mInvited.remove(item);
+    }
+
     public static void setmInvited(ArrayList<String> invited) {
         mInvited = invited;
     }
