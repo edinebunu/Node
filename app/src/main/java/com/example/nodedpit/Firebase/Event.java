@@ -185,16 +185,15 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    going.setBackgroundResource(R.drawable.going_green);
+                                    going.setBackgroundResource(R.drawable.evgo);
                                     db.collection("Events").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
-
                                     return;
                                 }
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
-                            going.setBackgroundResource(R.drawable.evgo);
+                            going.setBackgroundResource(R.drawable.going_green);
                             db.collection("Events").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
 
@@ -215,7 +214,7 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    interested.setBackgroundResource(R.drawable.interested_green);
+                                    interested.setBackgroundResource(R.drawable.interested);
                                     db.collection("Events").document(uid)
                                             .collection("InterestedUsers").document(userId).delete();
 
@@ -224,7 +223,7 @@ public class Event {
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
-                            interested.setBackgroundResource(R.drawable.interested);
+                            interested.setBackgroundResource(R.drawable.going_green);
                             db.collection("Events").document(uid)
                                     .collection("InterestedUsers").document(userId).set(user);
 

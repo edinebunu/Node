@@ -202,7 +202,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if (document.getId().equals(UserID)) {
-                                    interested.setBackgroundResource(R.drawable.interested_green);
+                                    interested.setBackgroundResource(R.drawable.going_green);
                                     return;
                                 }
                             }

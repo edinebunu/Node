@@ -81,8 +81,12 @@ public class TaskListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                try {
                                 if (!document.getBoolean("isDone")) {
                                     ids.add(document.getId());
+                                }
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
                                 }
                             }
                             initRecyclerView(ids);
@@ -90,6 +94,7 @@ public class TaskListActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void getDone()
     {
@@ -102,9 +107,14 @@ public class TaskListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getBoolean("isDone")) {
-                                    ids.add(document.getId());
+                                try {
+                                    if (document.getBoolean("isDone")) {
+                                        ids.add(document.getId());
+                                    }
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
                                 }
+
                             }
                             initDoneRecyclerView(ids);
                         }
