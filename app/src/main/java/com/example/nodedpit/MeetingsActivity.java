@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +32,15 @@ public class MeetingsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    Button TaskButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetings);
         recyclerView = findViewById(R.id.meetingsList);
+
+
 
         getMeetingsBuffer();
     }

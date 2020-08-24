@@ -5,10 +5,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.nodedpit.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -172,7 +174,7 @@ public class Event {
                 });
     }
 
-    public void goingButtonPressed(final String uid, final String userId){
+    public void goingButtonPressed(final String uid, final String userId, final Button going){
 
         db.collection("Events").document(uid).collection("GoingUsers")
                 .get()
@@ -183,15 +185,19 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
+                                    going.setBackgroundResource(R.drawable.going_green);
                                     db.collection("Events").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
+
                                     return;
                                 }
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
+                            going.setBackgroundResource(R.drawable.evgo);
                             db.collection("Events").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -199,7 +205,7 @@ public class Event {
                 });
     }
 
-    public void interestedButtonPressed(final String uid, final String userId){
+    public void interestedButtonPressed(final String uid, final String userId, final Button interested){
         db.collection("Events").document(uid).collection("InterestedUsers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -209,15 +215,19 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
+                                    interested.setBackgroundResource(R.drawable.interested_green);
                                     db.collection("Events").document(uid)
                                             .collection("InterestedUsers").document(userId).delete();
+
                                     return;
                                 }
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
+                            interested.setBackgroundResource(R.drawable.interested);
                             db.collection("Events").document(uid)
                                     .collection("InterestedUsers").document(userId).set(user);
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }

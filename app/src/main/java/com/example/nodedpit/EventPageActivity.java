@@ -1,5 +1,6 @@
 package com.example.nodedpit;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,12 +73,14 @@ public class EventPageActivity extends AppCompatActivity {
         coverImg =(ImageView) findViewById(R.id.imageView4);
         mTitle = findViewById(R.id.textView6);
         mDate = findViewById(R.id.textView9);
+        mTime = findViewById(R.id.textView10);
         mDescription = findViewById(R.id.textView8);
         chat = findViewById(R.id.eventChatRecyclerView);
 
         DocumentReference docRef = db.collection("Events").document(mDocumentName);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -86,6 +89,8 @@ public class EventPageActivity extends AppCompatActivity {
 
                         mTitle.setText(document.getString("Name"));
                         mDescription.setText(document.getString("Description"));
+                        mDate.setText(document.get("DateDay") + " / "  + document.get("DateMonth") + " / " + document.get("DateYear"));
+                        mTime.setText(document.get("DateHour") + " : "  + document.get("DateHour"));
 
                         try {
                             e.setCoverImg(document.getString("Name"),coverImg);

@@ -1,6 +1,9 @@
 package com.example.nodedpit;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     DocumentReference nameRef;
     TextView nameView;
     TextView description;
+    Button FriendsList;
 
 
     @Override
@@ -45,6 +49,15 @@ public class ProfileActivity extends AppCompatActivity {
         profile = findViewById(R.id.profile_img);
         nameView = findViewById(R.id.NameView);
         description = findViewById(R.id.descriptionText);
+        FriendsList = findViewById(R.id.friends_button);
+
+
+        FriendsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFriends();
+            }
+        });
 
         try {
             e.getProfileImg(Uid, profile);
@@ -71,6 +84,11 @@ public class ProfileActivity extends AppCompatActivity {
                 });
 
 
+    }
 
+    public void openFriends(){
+        Intent intent = new Intent(this, FriendsRecycler.class);
+        startActivity(intent);
     }
-    }
+
+}

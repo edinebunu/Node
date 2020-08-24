@@ -35,12 +35,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private ArrayList<String> ids;
     private ArrayList<String> invited = new ArrayList<>();
     private Context mContext;
 
     private FirebaseAuth mAuth;
+
+    private String UserID;
 
     final Event e = new Event();
 
@@ -65,6 +68,10 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
         mAuth = FirebaseAuth.getInstance();
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
+        UserID = mAuth.getCurrentUser().getUid();
+
+        ButtonChangerGoing(holder.going, ids.get(position));
+        ButtonChangerInterested(holder.notGoing, ids.get(position));
 
         db.collection("Meetings").document(ids.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -83,14 +90,14 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
         holder.going.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goingButtonPressed(myId,currentUser.getUid());
+                goingButtonPressed(myId,currentUser.getUid(), holder.going);
             }
         });
 
         holder.notGoing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notGoingButtonPressed(myId,currentUser.getUid());
+                notGoingButtonPressed(myId,currentUser.getUid(), holder.notGoing);
             }
         });
 
@@ -141,7 +148,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
     }
 
 
-    public void goingButtonPressed(final String uid, final String userId){
+    public void goingButtonPressed(final String uid, final String userId, final Button going){
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -154,6 +161,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
+                                    going.setBackgroundResource(R.drawable.going_green);
                                     db.collection("Meetings").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
                                     return;
@@ -161,6 +169,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
+                            going.setBackgroundResource(R.drawable.evgo2);
                             db.collection("Meetings").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
                         } else {
@@ -170,7 +179,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                 });
     }
 
-    public void notGoingButtonPressed(final String uid, final String userId){
+    public void notGoingButtonPressed(final String uid, final String userId, final Button notgoing){
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -183,6 +192,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
+                                    notgoing.setBackgroundResource(R.drawable.going_green);
                                     db.collection("Meetings").document(uid)
                                             .collection("NotGoingUsers").document(userId).delete();
                                     return;
@@ -190,6 +200,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
+                            notgoing.setBackgroundResource(R.drawable.not_going);
                             db.collection("Meetings").document(uid)
                                     .collection("NotGoingUsers").document(userId).set(user);
                         } else {
@@ -240,4 +251,49 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
             chat = itemView.findViewById(R.id.chatBtn);
         }
     }
+
+    public void ButtonChangerGoing(final Button going, final String ids){
+        db.collection("Events").document(ids).collection("GoingUsers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentName = document.getId();
+                                if (document.getId().equals(UserID)) {
+                                    going.setBackgroundResource(R.drawable.going_green);
+                                    return;
+                                }
+                            }
+                            going.setBackgroundResource(R.drawable.evgo);
+                        } else {
+                            Log.w(TAG, "Error changing button", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void ButtonChangerInterested (final Button interested, final String ids) {
+        db.collection("Events").document(ids).collection("InterestedUsers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentName = document.getId();
+                                if (document.getId().equals(UserID)) {
+                                    interested.setBackgroundResource(R.drawable.interested_green);
+                                    return;
+                                }
+                            }
+                            interested.setBackgroundResource(R.drawable.interested);
+                        } else {
+                            Log.w(TAG, "Error changing button", task.getException());
+                        }
+                    }
+                });
+    }
+
 }

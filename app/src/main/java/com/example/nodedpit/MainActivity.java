@@ -7,6 +7,7 @@ import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,16 +20,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nodedpit.Firebase.UserProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,13 +46,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toast backToast;
 
     String mUid;
-    String mDocumentName;
+
     RecyclerView recyclerView;
-    CircleImageView drawerImage;
+
+    UserProfile e = new UserProfile();
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mDesc = new ArrayList<>();
     private ArrayList<String> mIds = new ArrayList<>();
+    private ArrayList<Boolean> isGoing = new ArrayList<>();
 
     //private GestureDetector gestureDetector;
 
@@ -74,8 +81,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         mUid = mAuth.getCurrentUser().getUid();
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
+
+//        LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = layoutInflater.inflate(R.layout.header, mDrawLayout);
+
+        View headerView = navigationView.inflateHeaderView(R.layout.header);
+
+        final CircleImageView drawerImage = (CircleImageView) headerView.findViewById(R.id.drawer_image);
+        final TextView drawerName = (TextView) headerView.findViewById(R.id.drawer_name);
+
+
+
+        try {
+            e.getProfileImg(mUid, drawerImage);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Users").document(mUid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                drawerName.setText(documentSnapshot.get("Name") + " " + documentSnapshot.get("LastName"));
+            }
+        });
+
+
     }
+
+
+
 
     public void openQr(View view){
         Intent intent = new Intent(this, QrCodeScannerActivity.class);
@@ -98,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          mDesc.removeAll(mDesc);
          mIds.removeAll(mIds);
 
+
          getEventBuffer();
     }
 
@@ -116,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 mNames.add(document.getString("Name"));
                                 mDesc.add(document.getString("Description"));
                                 mIds.add(document.getId());
+
+
 
                             }
                             initRecyclerView();

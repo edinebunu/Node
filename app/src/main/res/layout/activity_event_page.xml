@@ -51,15 +51,14 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="28dp"
         android:requiresFadingEdge="horizontal|vertical"
         android:shadowDx="1"
         android:shadowDy="-5"
         android:shadowRadius="5"
         android:text="Antol"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textSize="35sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -92,7 +91,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="37dp"
         android:text="YY/MM/DD"
         android:textColor="#2AA52F"
         android:textSize="18sp"
@@ -106,11 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="37dp"
         android:text="HH/MM"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/GoingUsers"

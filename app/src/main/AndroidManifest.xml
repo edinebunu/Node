@@ -32,6 +32,7 @@
         <activity android:name=".EventPageActivity" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".FriendsRecycler" />
         <activity android:name=".UserData" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />

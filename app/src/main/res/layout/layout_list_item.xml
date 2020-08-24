@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/interested"
         android:layout_width="70dp"
         android:layout_height="25dp"
         android:layout_marginEnd="8dp"
@@ -78,13 +78,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/going"
         android:layout_width="70dp"
         android:layout_height="25dp"
         android:layout_marginEnd="4dp"
         android:background="@drawable/evgo"
-        app:layout_constraintBottom_toBottomOf="@+id/button4"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button4" />
+        app:layout_constraintBottom_toBottomOf="@+id/interested"
+        app:layout_constraintEnd_toStartOf="@+id/interested"
+        app:layout_constraintTop_toTopOf="@+id/interested" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

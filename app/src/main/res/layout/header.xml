@@ -9,16 +9,26 @@
     android:padding="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="72dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="4dp"
+        android:id="@+id/drawer_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="9dp"
         android:src="@drawable/fui_ic_anonymous_white_24dp"
         app:civ_border_color="#007506"
         app:civ_border_width="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/drawer_name"
+        android:layout_width="65dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/drawer_image"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
