@@ -111,6 +111,13 @@ public class EventPageActivity extends AppCompatActivity {
         getInterestedUsers();
     }
 
+    public void openQrActivity(View view)
+    {
+        Intent intent = new Intent(this,QrEventPage.class);
+        intent.putExtra("EventId", mDocumentName);
+        startActivity(intent);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -200,6 +200,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="6dp"
         android:background="@drawable/qrcode"
+        android:onClick="openQrActivity"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />

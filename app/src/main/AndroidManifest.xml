@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".CreateTaskActivity"></activity>
+        <activity android:name=".FriendsChatActivity"></activity>
+        <activity android:name=".QrEventPage" />
+        <activity android:name=".CreateTaskActivity" />
         <activity android:name=".TaskListActivity" />
         <activity android:name=".MeetingsChatActivity" />
         <activity
@@ -32,7 +34,6 @@
         <activity android:name=".EventPageActivity" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".FriendsRecycler" />
         <activity android:name=".UserData" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />

@@ -1,10 +1,12 @@
 package com.example.nodedpit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,7 +46,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
         setProfilePicture(mIds.get(position), holder.image);
@@ -64,6 +66,15 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
                     }
                 });
+
+        holder.chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( mContext, FriendsChatActivity.class);
+                intent.putExtra("User", mIds.get(position));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -89,11 +100,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         CircleImageView image;
         TextView name;
         CardView layout;
+        Button chat;
+
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.friendsImage);
             name = itemView.findViewById(R.id.friendsName);
             layout = itemView.findViewById(R.id.cardLayout);
+            chat = itemView.findViewById(R.id.button14);
         }
     }
 }

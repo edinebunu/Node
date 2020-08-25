@@ -1,10 +1,8 @@
 package com.example.nodedpit;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -33,7 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MeetingsChatActivity extends AppCompatActivity {
+public class FriendsChatActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String mDocumentName;
@@ -45,11 +43,11 @@ public class MeetingsChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meetings_chat);
+        setContentView(R.layout.activity_friends_chat);
         Intent intent = getIntent();
-        mDocumentName = intent.getStringExtra("Id");
-        chat = findViewById(R.id.recyclerView2);
-        mtMessage = findViewById(R.id.editTextTextPersonName11);
+        mDocumentName = intent.getStringExtra("User");
+        chat = findViewById(R.id.recyclerView4);
+        mtMessage = findViewById(R.id.editTextTextPersonName13);
     }
 
     public void deleteMessage(View view){
@@ -61,7 +59,7 @@ public class MeetingsChatActivity extends AppCompatActivity {
         super.onStart();
         getChat();
 
-        db.collection("MeetingsChat").document(mDocumentName).collection("Chat")
+        db.collection("FriendsChat").document(mDocumentName).collection("Chat")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -84,7 +82,7 @@ public class MeetingsChatActivity extends AppCompatActivity {
         final ArrayList<String> messages = new ArrayList<>();
         final ArrayList<String> messageId = new ArrayList<>();
 
-        db.collection("MeetingsChat").document(mDocumentName).collection("Chat")
+        db.collection("FriendsChat").document(mDocumentName).collection("Chat")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -112,44 +110,43 @@ public class MeetingsChatActivity extends AppCompatActivity {
             chat.smoothScrollToPosition(smt.size());
     }
 
-    public void sendMessagee(View view)
-    {
+    public void uploadMessage(View view) {
         ConstraintLayout mainLayout;
 
         mainLayout = findViewById(R.id.meetChat);
 
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        if( !mtMessage.getText().toString().equals(""))
-            {
-        Map<String, Object> messageEntry = new HashMap<>();
-        messageEntry.put("Host", currentUser.getUid());
-        messageEntry.put("Message", mtMessage.getText().toString());
-        messageEntry.put("Timestamp",new Date());
+        if (!mtMessage.getText().toString().equals("")) {
+            Map<String, Object> messageEntry = new HashMap<>();
+            messageEntry.put("Host", currentUser.getUid());
+            messageEntry.put("Message", mtMessage.getText().toString());
+            messageEntry.put("Timestamp", new Date());
 
-        db.collection("MeetingsChat").document(mDocumentName).collection("Chat")
-                .add(messageEntry)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        chat.smoothScrollToPosition(smt.size());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            db.collection("FriendsChat").document(mDocumentName).collection("Chat")
+                    .add(messageEntry)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            chat.smoothScrollToPosition(smt.size());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+                        }
+                    });
 
-        mtMessage.setText("");
+            mtMessage.setText("");
         }
     }
 }

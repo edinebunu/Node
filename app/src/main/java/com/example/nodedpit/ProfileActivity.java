@@ -1,25 +1,30 @@
 package com.example.nodedpit;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nodedpit.Firebase.UserProfile;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,8 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     DocumentReference nameRef;
     TextView nameView;
     TextView description;
-    Button FriendsList;
-
+    RecyclerView friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         profile = findViewById(R.id.profile_img);
         nameView = findViewById(R.id.NameView);
         description = findViewById(R.id.descriptionText);
-        FriendsList = findViewById(R.id.friends_button);
-
-
-        FriendsList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFriends();
-            }
-        });
+        friend = findViewById(R.id.friends_view);
 
         try {
             e.getProfileImg(Uid, profile);
@@ -83,12 +79,37 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-
+        initFriends();
     }
 
-    public void openFriends(){
-        Intent intent = new Intent(this, FriendsRecycler.class);
-        startActivity(intent);
+    private void initFriendsAdapter(ArrayList<String> mIds) {
+        FriendsAdapter adapter = new FriendsAdapter(mIds, this);
+        friend.setAdapter(adapter);
+        friend.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void initFriends() {
+        final ArrayList<String> mIds = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    private static final String TAG = "Event";
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                mIds.add(document.getId());
+
+                            }
+                            initFriendsAdapter(mIds);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 }

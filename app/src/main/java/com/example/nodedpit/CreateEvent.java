@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,6 +54,7 @@ public class CreateEvent extends AppCompatActivity {
 
     private static final String TAG = "CreateEvent";
     public static final int PICK_IMAGE = 10101;
+    private StorageReference mStorageRef;
 
     private FirebaseAuth mAuth;
 
@@ -172,6 +175,8 @@ public class CreateEvent extends AppCompatActivity {
                 dialog.show();
             };
         });
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
     public void chooseCover(View view){
@@ -308,7 +313,7 @@ public class CreateEvent extends AppCompatActivity {
                                                             }
                                                         }
 
-                                                        saveImage(bitmap);
+                                                        saveImage(bitmap, currentEventId[0]);
 
                                                     } catch (WriterException | IOException e) {
                                                         e.printStackTrace();
@@ -334,15 +339,76 @@ public class CreateEvent extends AppCompatActivity {
     }
 
 
-    private void saveImage(Bitmap bitmap) throws IOException {
+    private void saveImage(Bitmap bitmap, String name) throws IOException {
 
         MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title" , "Smt");  // Saves the image.
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,25, baos);
+
+        try {
+            String storageUid = name;
+            final StorageReference reference = FirebaseStorage.getInstance()
+                    .getReference()
+                    .child("qr-codes")
+                    .child(storageUid +".jpeg");
+
+            reference.putBytes(baos.toByteArray())
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            getDownloadUrl(reference);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Error Firebase Unreached", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
 
+    private void getDownloadUrl(StorageReference ref)
+    {
+        Log.d(TAG, "getDownloadUrl: start");
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                setQrUrl(uri);
+            }
+        });
+    }
 
+    private void setQrUrl(Uri uri)
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri).build();
+
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+        Log.d(TAG, "setProfileUrl: end");
+    }
 
 
 
