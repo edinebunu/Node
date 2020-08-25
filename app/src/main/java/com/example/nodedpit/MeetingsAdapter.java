@@ -161,7 +161,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    going.setBackgroundResource(R.drawable.going_green);
+                                    going.setBackgroundResource(R.drawable.evgo2);
                                     db.collection("Meetings").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
                                     return;
@@ -169,7 +169,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
-                            going.setBackgroundResource(R.drawable.evgo2);
+                            going.setBackgroundResource(R.drawable.going_green);
                             db.collection("Meetings").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
                         } else {
@@ -192,7 +192,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    notgoing.setBackgroundResource(R.drawable.going_green);
+                                    notgoing.setBackgroundResource(R.drawable.not_going);
                                     db.collection("Meetings").document(uid)
                                             .collection("NotGoingUsers").document(userId).delete();
                                     return;
@@ -200,7 +200,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
-                            notgoing.setBackgroundResource(R.drawable.not_going);
+                            notgoing.setBackgroundResource(R.drawable.going_green);
                             db.collection("Meetings").document(uid)
                                     .collection("NotGoingUsers").document(userId).set(user);
                         } else {
@@ -253,7 +253,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
     }
 
     public void ButtonChangerGoing(final Button going, final String ids){
-        db.collection("Events").document(ids).collection("GoingUsers")
+        db.collection("Meetings").document(ids).collection("GoingUsers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -275,7 +275,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
     }
 
     public void ButtonChangerInterested (final Button interested, final String ids) {
-        db.collection("Events").document(ids).collection("InterestedUsers")
+        db.collection("Meetings").document(ids).collection("InterestedUsers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

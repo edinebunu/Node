@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".FriendsChatActivity"></activity>
+        <activity android:name=".FriendProfile"></activity>
+        <activity android:name=".FriendsChatActivity" />
         <activity android:name=".QrEventPage" />
         <activity android:name=".CreateTaskActivity" />
         <activity android:name=".TaskListActivity" />

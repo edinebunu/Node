@@ -196,7 +196,6 @@ public class Event {
                             going.setBackgroundResource(R.drawable.going_green);
                             db.collection("Events").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
-
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
