@@ -59,7 +59,10 @@ public class FriendsChatActivity extends AppCompatActivity {
         super.onStart();
         getChat();
 
-        db.collection("FriendsChat").document(mDocumentName).collection("Chat")
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+
+        db.collection("FriendsChat").document(mAuth.getUid()).collection("Chat").document(mDocumentName).collection("ChatRoom")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -82,7 +85,10 @@ public class FriendsChatActivity extends AppCompatActivity {
         final ArrayList<String> messages = new ArrayList<>();
         final ArrayList<String> messageId = new ArrayList<>();
 
-        db.collection("FriendsChat").document(mDocumentName).collection("Chat")
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+
+        db.collection("FriendsChat").document(mAuth.getUid()).collection("Chat").document(mDocumentName).collection("ChatRoom")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -122,16 +128,30 @@ public class FriendsChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (!mtMessage.getText().toString().equals("")) {
             Map<String, Object> messageEntry = new HashMap<>();
-            messageEntry.put("Host", currentUser.getUid());
+            messageEntry.put("Host", mAuth.getUid());
             messageEntry.put("Message", mtMessage.getText().toString());
             messageEntry.put("Timestamp", new Date());
 
-            db.collection("FriendsChat").document(mDocumentName).collection("Chat")
+            db.collection("FriendsChat").document(mDocumentName).collection("Chat").document(mAuth.getUid()).collection("ChatRoom")
+                    .add(messageEntry)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            chat.smoothScrollToPosition(smt.size());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
+            db.collection("FriendsChat").document(mAuth.getUid()).collection("Chat").document(mDocumentName).collection("ChatRoom")
                     .add(messageEntry)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
