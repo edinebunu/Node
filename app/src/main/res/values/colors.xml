@@ -5,4 +5,6 @@
     <color name="colorAccent">#0C9332</color>
     <color name="colorGrey">#545454</color>
     <color name="chatOther">#9b5fd4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="viewfinder_laser">#FFFFFF</color>
 </resources>

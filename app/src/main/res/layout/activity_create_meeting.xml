@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#656565"
+    android:background="@color/colorPrimary"
     tools:context=".CreateMeeting">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Select Friends:"
+        android:textColor="#4CAF50"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,42 +33,38 @@
         android:id="@+id/editTextTextPersonName7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_text_shape"
         android:ems="10"
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
-        android:text="Meeting Topic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inviteFriends" />
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <EditText
         android:id="@+id/editTextTextPersonName9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_text_shape"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7" />
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <TextView
         android:id="@+id/Dateid"
         android:layout_width="210dp"
         android:layout_height="35dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="Set Date"
-        android:text=" Set Date"
-        android:textColor="#FFFFFF"
+        android:text="SET DATE"
+        android:textColor="#4CAF50"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName9" />
 
@@ -81,23 +78,50 @@
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="Set Hour"
-        android:text=" Set Hour"
-        android:textColor="#FFFFFF"
+        android:text="SET HOUR"
+        android:textColor="#4CAF50"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Dateid" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/blank"
         android:onClick="createButton"
-        android:text="Create"
+        android:text="Create meeting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Hourid" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="25dp"
+        android:text="MEETING TOPIC"
+        android:textColor="#4CAF50"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inviteFriends" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="15dp"
+        android:text="NAME"
+        android:textColor="#4CAF50"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

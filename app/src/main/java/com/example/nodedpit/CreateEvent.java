@@ -84,7 +84,7 @@ public class CreateEvent extends AppCompatActivity {
         mUid = currentUser.getUid();
 
         mDisplayDate = findViewById(R.id.Dateid);
-        mDisplayDate.setPaintFlags(mDisplayDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        ///mDisplayDate.setPaintFlags(mDisplayDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class CreateEvent extends AppCompatActivity {
         };
 
         mDisplayHour = findViewById(R.id.Hourid);
-        mDisplayHour.setPaintFlags(mDisplayHour.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        ///mDisplayHour.setPaintFlags(mDisplayHour.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mDisplayHour.setOnClickListener(new View.OnClickListener() {
             @Override

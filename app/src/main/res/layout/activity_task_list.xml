@@ -33,10 +33,11 @@
 
     <Button
         android:id="@+id/button12"
-        android:layout_width="75dp"
+        android:layout_width="85dp"
         android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/blank"
         android:onClick="createTask"
         android:text="Create"
         android:textSize="12sp"

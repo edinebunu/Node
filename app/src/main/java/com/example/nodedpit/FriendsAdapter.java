@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nodedpit.Firebase.Event;
@@ -109,7 +110,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         CircleImageView image;
         TextView name;
-        CardView layout;
+        ConstraintLayout layout;
         Button chat;
 
         public ViewHolder(View itemView) {

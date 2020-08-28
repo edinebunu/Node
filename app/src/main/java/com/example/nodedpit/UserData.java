@@ -34,6 +34,7 @@ public class UserData extends AppCompatActivity {
     String mUid;
     String mName;
     String mLastName;
+    int mDay,mMonth,mYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,43 @@ public class UserData extends AppCompatActivity {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
+                mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
+
+                        mDay=day;
+                        mMonth=month;
+                        mYear=year;
+
+                        if(day <10 && month < 10) {
+                            String date = "0" + day + "/" + "0" + month + "/" + year;
+                            mDisplayDate.setText(date);
+                        }
+
+                        else if(day < 10) {
+                            String date = "0" + day + "/" + month + "/" + year;
+                            mDisplayDate.setText(date);
+                        }
+
+                        else if(month < 10) {
+                            String date = day + "/" + "0" + month + "/" + year;
+                            mDisplayDate.setText(date);
+                        }
+
+                        else {
+                            String date = day + "/" + month + "/" + year;
+                            mDisplayDate.setText(date);
+                        }
+
+                        if(year > Calendar.getInstance().get(Calendar.YEAR) ) {
+                            Toast.makeText(UserData.this, "Invalid birth date",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+
                 signUp = (Button) findViewById(R.id.signUpBtn);
                 signUp.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -70,7 +108,7 @@ public class UserData extends AppCompatActivity {
                         String countryString = mCountry.getText().toString();
 
                         UserProfile p = new UserProfile();
-                        p.createSignUp(mName,mLastName,mUid,cityString,countryString,day,month,year);
+                        p.createSignUp(mName,mLastName,mUid,cityString,countryString,mDay,mMonth,mYear);
 
                         final Intent intent = new Intent(UserData.this, MainActivity.class);
                         intent.putExtra("UID", mUid);
@@ -84,39 +122,6 @@ public class UserData extends AppCompatActivity {
                 mLastName = intent.getStringExtra("LastName");
             }
         });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
-
-                if(day <10 && month < 10) {
-                    String date = "0" + day + "/" + "0" + month + "/" + year;
-                    mDisplayDate.setText(date);
-                }
-
-                else if(day < 10) {
-                    String date = "0" + day + "/" + month + "/" + year;
-                    mDisplayDate.setText(date);
-                }
-
-                else if(month < 10) {
-                    String date = day + "/" + "0" + month + "/" + year;
-                    mDisplayDate.setText(date);
-                }
-
-                else {
-                    String date = day + "/" + month + "/" + year;
-                    mDisplayDate.setText(date);
-                }
-
-                if(year > Calendar.getInstance().get(Calendar.YEAR) ) {
-                    Toast.makeText(UserData.this, "Invalid birth date",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
         mHobby = (EditText) findViewById(R.id.Hobbyid);
 

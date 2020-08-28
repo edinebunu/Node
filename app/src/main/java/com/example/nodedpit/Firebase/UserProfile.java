@@ -49,11 +49,15 @@ public class UserProfile {
 
     public void createSignUp(String name, String lastName, String UID, String city , String country, int dd, int mm, int yy)
     {
-        Map<String, String> info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
         info.put("Name",name);
         info.put("LastName",lastName);
+        info.put("DateYear", yy);
+        info.put("DateMonth", mm);
+        info.put("DateDay",dd);
         info.put("City",city);
         info.put("Country",country);
+
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
