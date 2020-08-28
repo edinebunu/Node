@@ -49,13 +49,14 @@
 
     <TextView
         android:id="@+id/self_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="106dp"
+        android:layout_height="21dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="2dp"
         android:background="@drawable/user_chat_bubble"
         android:maxWidth="300dp"
+        android:paddingLeft="5dp"
         android:paddingEnd="40dp"
         android:text="TextView"
         android:textSize="16sp"
@@ -67,7 +68,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chat_right_img"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="18dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="2dp"
