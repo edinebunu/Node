@@ -49,15 +49,15 @@
 
         <Button
             android:id="@+id/button14"
-            android:layout_width="49dp"
-            android:layout_height="18dp"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="23dp"
-            android:background="@drawable/blank_w" />
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/chaat_icon" />
         />
     </RelativeLayout>
 

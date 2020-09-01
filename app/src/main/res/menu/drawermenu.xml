@@ -2,25 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/profileButton"
-        android:icon="@drawable/checkbox_logic"
+        android:icon="@drawable/profile_icon"
+        android:iconTint="#649C45"
         android:title="Profile" />
 
     <item
         android:id="@+id/PastMeetings"
+        android:icon="@drawable/calendar_icon"
+        android:iconTint="#649C45"
         android:title="Past Events" />
 
     <item
         android:id="@+id/Past"
+        android:icon="@drawable/calendar_icon"
+        android:iconTint="#649C45"
         android:title="Past Meetings" />
 
     <item
         android:id="@+id/Meetings"
+        android:icon="@drawable/calendar_icon"
+        android:iconTint="#649C45"
         android:title="My Events" />
 
     <item
         android:id="@+id/AddEvent"
+        android:icon="@drawable/pencil_icon"
+        android:iconTint="#649C45"
         android:title="Add Event" />
 
-<item android:id="@+id/SignOut" android:title="Sign Out"/>
+    <item
+        android:id="@+id/SignOut"
+        android:icon="@drawable/door_icon"
+        android:iconTint="#649C45"
+        android:title="Sign Out" />
 
 </menu>

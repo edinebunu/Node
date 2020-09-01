@@ -57,6 +57,7 @@
         android:layout_gravity="start"
         android:background="@color/colorPrimary"
         app:itemIconPadding="12dp"
+        app:itemIconTint="#649C45"
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Medium"
         app:itemTextColor="#649C45"
         app:menu="@menu/drawermenu">

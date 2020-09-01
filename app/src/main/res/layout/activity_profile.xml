@@ -38,8 +38,8 @@
         android:layout_marginTop="12dp"
         android:text="TextView"
         android:textColor="#649C45"
-        app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintStart_toStartOf="@+id/Location"
+        app:layout_constraintTop_toBottomOf="@+id/Location" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_view"
@@ -55,17 +55,17 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="TextView"
         android:textColor="#649C45"
-        app:layout_constraintStart_toStartOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        app:layout_constraintStart_toStartOf="@+id/DateOfBirth"
+        app:layout_constraintTop_toBottomOf="@+id/DateOfBirth" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/DateOfBirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

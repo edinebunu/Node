@@ -1,5 +1,6 @@
 package com.example.nodedpit;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference nameRef;
     TextView nameView;
+    TextView location;
+    TextView dateofbirth;
     TextView description;
     RecyclerView friend;
 
@@ -54,6 +57,8 @@ public class ProfileActivity extends AppCompatActivity {
         nameView = findViewById(R.id.NameView);
         description = findViewById(R.id.descriptionText);
         friend = findViewById(R.id.friends_view);
+        location = findViewById(R.id.Location);
+        dateofbirth = findViewById(R.id.DateOfBirth);
 
         try {
             e.getProfileImg(Uid, profile);
@@ -68,8 +73,15 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String firstName = documentSnapshot.getString("Name");
                         String lastName = documentSnapshot.getString("LastName");
+                        String country = documentSnapshot.getString("Country");
+                        String city = documentSnapshot.getString("City");
+                        String day = documentSnapshot.getString("DateDay");
+                        String month = documentSnapshot.getString("DateMonth");
+                        String year = documentSnapshot.getString("DateYear");
 
                         nameView.setText(firstName + " " + lastName);
+                        location.setText(city + ", " + country);
+                        dateofbirth.setText(day + "/" + month + "/" + year);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
