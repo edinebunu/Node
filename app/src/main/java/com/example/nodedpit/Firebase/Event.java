@@ -185,7 +185,7 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    going.setBackgroundResource(R.drawable.evgo);
+                                    going.setBackgroundResource(R.drawable.going);
                                     db.collection("Events").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
                                     return;
@@ -222,7 +222,7 @@ public class Event {
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
-                            interested.setBackgroundResource(R.drawable.going_green);
+                            interested.setBackgroundResource(R.drawable.interested_green);
                             db.collection("Events").document(uid)
                                     .collection("InterestedUsers").document(userId).set(user);
 

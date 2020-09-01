@@ -48,8 +48,8 @@
 
     <Button
         android:id="@+id/interested"
-        android:layout_width="70dp"
-        android:layout_height="25dp"
+        android:layout_width="45dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/interested"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,10 +79,10 @@
 
     <Button
         android:id="@+id/going"
-        android:layout_width="70dp"
-        android:layout_height="25dp"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/evgo"
+        android:background="@drawable/going"
         app:layout_constraintBottom_toBottomOf="@+id/interested"
         app:layout_constraintEnd_toStartOf="@+id/interested"
         app:layout_constraintTop_toTopOf="@+id/interested" />
