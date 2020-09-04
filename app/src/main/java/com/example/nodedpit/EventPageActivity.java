@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -109,6 +110,8 @@ public class EventPageActivity extends AppCompatActivity {
 
         getUsers();
         getInterestedUsers();
+
+        mDescription.setMovementMethod(new ScrollingMovementMethod());
     }
 
     public void openQrActivity(View view)

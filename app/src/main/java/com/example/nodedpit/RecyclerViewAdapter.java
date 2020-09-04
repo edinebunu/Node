@@ -61,8 +61,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.desc.setText((CharSequence) this.desc.get(position));
+        //holder.desc.setText((CharSequence) this.desc.get(position));
         holder.name.setText((CharSequence)this.names.get(position));
+
+        DocumentReference docRef = db.collection("Events").document(this.ids.get(position));
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        holder.desc.setText(document.get("DateDay").toString()+"/"+document.get("DateMonth").toString()+"/"+document.get("DateYear").toString()+" - "+document.get("DateHour").toString()+":"+document.get("DateMin").toString() );
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         UserID = mAuth.getCurrentUser().getUid();
@@ -93,8 +110,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        DocumentReference docRef = db.collection("Events").document(mDocumentName);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

@@ -57,6 +57,7 @@ public class UserProfile {
         info.put("DateDay",String.valueOf(dd));
         info.put("City",city);
         info.put("Country",country);
+        info.put("Description", "");
 
 
 
