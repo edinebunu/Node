@@ -52,9 +52,9 @@ public class UserProfile {
         Map<String, Object> info = new HashMap<>();
         info.put("Name",name);
         info.put("LastName",lastName);
-        info.put("DateYear", yy);
-        info.put("DateMonth", mm);
-        info.put("DateDay",dd);
+        info.put("DateYear", String.valueOf(yy));
+        info.put("DateMonth", String.valueOf(mm));
+        info.put("DateDay",String.valueOf(dd));
         info.put("City",city);
         info.put("Country",country);
 

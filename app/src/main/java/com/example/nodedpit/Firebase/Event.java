@@ -185,7 +185,7 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    going.setBackgroundResource(R.drawable.going);
+                                    going.setBackgroundResource(R.drawable.going_button);
                                     db.collection("Events").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
                                     return;
@@ -193,7 +193,7 @@ public class Event {
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
-                            going.setBackgroundResource(R.drawable.going_green);
+                            going.setBackgroundResource(R.drawable.going_buttton_green);
                             db.collection("Events").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
                         } else {
@@ -213,7 +213,7 @@ public class Event {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    interested.setBackgroundResource(R.drawable.interested);
+                                    interested.setBackgroundResource(R.drawable.interested_button);
                                     db.collection("Events").document(uid)
                                             .collection("InterestedUsers").document(userId).delete();
 
@@ -222,7 +222,7 @@ public class Event {
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Alan");
-                            interested.setBackgroundResource(R.drawable.interested_green);
+                            interested.setBackgroundResource(R.drawable.interested_button_green);
                             db.collection("Events").document(uid)
                                     .collection("InterestedUsers").document(userId).set(user);
 

@@ -6,5 +6,7 @@
     <color name="colorGrey">#545454</color>
     <color name="chatOther">#9b5fd4</color>
     <color name="white">#FFFFFF</color>
+    <color name="appGreen">#7CC171</color>
+    <color name="ButtonGreen">#63995a</color>
     <color name="viewfinder_laser">#FFFFFF</color>
 </resources>

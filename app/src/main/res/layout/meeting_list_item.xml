@@ -44,34 +44,33 @@
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="43dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/going"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/going_button"
         android:textSize="8sp"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/button8"
+        app:layout_constraintEnd_toStartOf="@+id/button8" />
 
     <Button
         android:id="@+id/button8"
-        android:layout_width="44dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/not_going"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/not_going_button"
         android:textSize="8sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button7" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/chatBtn"
-        android:layout_width="48dp"
-        android:layout_height="39dp"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/chaat_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.281"
-        app:layout_constraintStart_toEndOf="@+id/profile_pictures_list"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

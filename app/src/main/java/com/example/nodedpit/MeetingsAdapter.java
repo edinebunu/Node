@@ -161,7 +161,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    going.setBackgroundResource(R.drawable.going);
+                                    going.setBackgroundResource(R.drawable.going_button);
                                     db.collection("Meetings").document(uid)
                                             .collection("GoingUsers").document(userId).delete();
                                     return;
@@ -169,7 +169,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
-                            going.setBackgroundResource(R.drawable.going_green);
+                            going.setBackgroundResource(R.drawable.going_buttton_green);
                             db.collection("Meetings").document(uid)
                                     .collection("GoingUsers").document(userId).set(user);
                         } else {
@@ -192,7 +192,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if(document.getId().equals(userId)){
-                                    notgoing.setBackgroundResource(R.drawable.not_going);
+                                    notgoing.setBackgroundResource(R.drawable.not_going_button);
                                     db.collection("Meetings").document(uid)
                                             .collection("NotGoingUsers").document(userId).delete();
                                     return;
@@ -200,7 +200,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             }
                             Map<String, Object> user = new HashMap<>();
                             user.put("first", "Aac");
-                            notgoing.setBackgroundResource(R.drawable.not_going_green);
+                            notgoing.setBackgroundResource(R.drawable.not_going_button_green);
                             db.collection("Meetings").document(uid)
                                     .collection("NotGoingUsers").document(userId).set(user);
                         } else {
@@ -262,11 +262,11 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if (document.getId().equals(UserID)) {
-                                    going.setBackgroundResource(R.drawable.going_green);
+                                    going.setBackgroundResource(R.drawable.going_buttton_green);
                                     return;
                                 }
                             }
-                            going.setBackgroundResource(R.drawable.going);
+                            going.setBackgroundResource(R.drawable.going_button);
                         } else {
                             Log.w(TAG, "Error changing button", task.getException());
                         }
@@ -284,12 +284,12 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if (document.getId().equals(UserID)) {
-                                    notGoing.setBackgroundResource(R.drawable.not_going_green)
+                                    notGoing.setBackgroundResource(R.drawable.not_going_button_green)
                                     ;
                                     return;
                                 }
                             }
-                            notGoing.setBackgroundResource(R.drawable.not_going);
+                            notGoing.setBackgroundResource(R.drawable.not_going_button);
                         } else {
                             Log.w(TAG, "Error changing button", task.getException());
                         }

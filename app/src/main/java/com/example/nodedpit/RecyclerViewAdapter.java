@@ -202,11 +202,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if (document.getId().equals(UserID)) {
-                                    interested.setBackgroundResource(R.drawable.interested_green);
+                                    interested.setBackgroundResource(R.drawable.interested_button_green);
                                     return;
                                 }
                             }
-                            interested.setBackgroundResource(R.drawable.interested);
+                            interested.setBackgroundResource(R.drawable.interested_button);
                         } else {
                             Log.w(TAG, "Error changing button", task.getException());
                         }
@@ -225,11 +225,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String documentName = document.getId();
                                 if (document.getId().equals(UserID)) {
-                                    going.setBackgroundResource(R.drawable.going_green);
+                                    going.setBackgroundResource(R.drawable.going_buttton_green);
                                     return;
                                 }
                             }
-                            going.setBackgroundResource(R.drawable.going);
+                            going.setBackgroundResource(R.drawable.going_button);
                         } else {
                             Log.w(TAG, "Error changing button", task.getException());
                         }
