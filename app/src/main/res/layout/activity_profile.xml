@@ -26,27 +26,30 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_img"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/descriptionText"
         android:layout_width="374dp"
-        android:layout_height="105dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:maxLines="10"
+        android:paddingBottom="30dp"
         android:text="TextView"
         android:textColor="#649C45"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/Location"
-        app:layout_constraintTop_toBottomOf="@+id/Location" />
+        app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +61,7 @@
         android:id="@+id/Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#649C45"
         app:layout_constraintStart_toStartOf="@+id/DateOfBirth"
@@ -68,13 +71,86 @@
         android:id="@+id/DateOfBirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:text="TextView"
         android:textColor="#649C45"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameView" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="135dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/blank"
+        android:onClick="addDescription"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Add Description"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/descriptionText" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName14"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:hint="Description..."
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/descriptionText" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/blank"
+        android:onClick="addDescFirestore"
+        android:text="Add"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName14"
+        app:layout_constraintEnd_toEndOf="@+id/descriptionText"
+        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName14"
+        app:layout_constraintVertical_bias="0.51" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="135dp"
+        android:layout_height="25dp"
+        android:background="@drawable/blank"
+        android:onClick="changeCurrentDesc"
+        android:text="Change Description"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/descriptionText"
+        app:layout_constraintEnd_toEndOf="@+id/descriptionText" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Description:"
+        android:textColor="#649C45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="#649C45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Location" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

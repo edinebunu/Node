@@ -107,8 +107,11 @@ public class UserData extends AppCompatActivity {
                         mCountry = (EditText) findViewById(R.id.Countryid);
                         String countryString = mCountry.getText().toString();
 
+                        mHobby = (EditText) findViewById(R.id.Hobbyid);
+                        String hh = mHobby.getText().toString();
+
                         UserProfile p = new UserProfile();
-                        p.createSignUp(mName,mLastName,mUid,cityString,countryString,mDay,mMonth,mYear);
+                        p.createSignUp(mName,mLastName,mUid,cityString,countryString,mDay,mMonth,mYear,hh);
 
                         final Intent intent = new Intent(UserData.this, MainActivity.class);
                         intent.putExtra("UID", mUid);
@@ -123,7 +126,7 @@ public class UserData extends AppCompatActivity {
             }
         });
 
-        mHobby = (EditText) findViewById(R.id.Hobbyid);
+
 
     }
 }

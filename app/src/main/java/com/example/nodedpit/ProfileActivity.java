@@ -2,6 +2,9 @@ package com.example.nodedpit;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,9 +39,19 @@ public class ProfileActivity extends AppCompatActivity {
     DocumentReference nameRef;
     TextView nameView;
     TextView description;
+
+    Button addDesc;
+    EditText userDesc;
+    Button descDb;
+    Button changeDesc;
+
+    TextView hobby;
+
     RecyclerView friend;
     TextView dateofbirth;
     TextView location;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +72,13 @@ public class ProfileActivity extends AppCompatActivity {
         dateofbirth = findViewById(R.id.DateOfBirth);
         location = findViewById(R.id.Location);
 
+        hobby = findViewById(R.id.textView32);
+
+        addDesc = findViewById(R.id.button5);
+        userDesc = findViewById(R.id.editTextTextPersonName14);
+        descDb = findViewById(R.id.button16);
+        changeDesc = findViewById(R.id.button17);
+
         try {
             e.getProfileImg(Uid, profile);
         } catch (IOException ex) {
@@ -77,10 +97,32 @@ public class ProfileActivity extends AppCompatActivity {
                         String day = documentSnapshot.getString("DateDay");
                         String month = documentSnapshot.getString("DateMonth");
                         String year = documentSnapshot.getString("DateYear");
+                        String currentHobby = documentSnapshot.getString("Hobby");
+
+                        String desc = documentSnapshot.getString("Description");
 
                         nameView.setText(firstName + " " + lastName);
                         location.setText(city + ", " + country);
                         dateofbirth.setText(day + "/" + month + "/" + year);
+                        hobby.setText("Hobby : " + currentHobby);
+
+                        if(!desc.equals(""))
+                        {
+                            description.setText(desc);
+                            description.setVisibility(View.VISIBLE);
+                            addDesc.setVisibility(View.INVISIBLE);
+                            descDb.setVisibility(View.INVISIBLE);
+                            userDesc.setVisibility(View.INVISIBLE);
+                            changeDesc.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            description.setVisibility(View.INVISIBLE);
+                            addDesc.setVisibility(View.VISIBLE);
+                            descDb.setVisibility(View.INVISIBLE);
+                            userDesc.setVisibility(View.INVISIBLE);
+                            changeDesc.setVisibility(View.INVISIBLE);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -102,6 +144,9 @@ public class ProfileActivity extends AppCompatActivity {
     public void initFriends() {
         final ArrayList<String> mIds = new ArrayList<>();
 
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .get()
@@ -113,6 +158,7 @@ public class ProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(!document.getId().equals(currentUser.getUid()))
                                 mIds.add(document.getId());
 
                             }
@@ -123,4 +169,48 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    public void addDescription(View view)
+    {
+        addDesc.setVisibility(View.GONE);
+        userDesc.setVisibility(View.VISIBLE);
+        descDb.setVisibility(View.VISIBLE);
+    }
+
+    public void addDescFirestore(View view)
+    {
+        final String input = userDesc.getText().toString();
+
+        DocumentReference washingtonRef = db.collection("Users").document(Uid);
+
+        washingtonRef
+                .update("Description", input)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        description.setText(input);
+                        userDesc.setVisibility(View.INVISIBLE);
+                        descDb.setVisibility(View.INVISIBLE);
+                        description.setVisibility(View.VISIBLE);
+                        changeDesc.setVisibility(View.VISIBLE);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    public void changeCurrentDesc(View view)
+    {
+        addDesc.setVisibility(View.GONE);
+        userDesc.setVisibility(View.VISIBLE);
+        description.setVisibility(View.INVISIBLE);
+        descDb.setVisibility(View.VISIBLE);
+        changeDesc.setVisibility(View.INVISIBLE);
+    }
+
+
 }

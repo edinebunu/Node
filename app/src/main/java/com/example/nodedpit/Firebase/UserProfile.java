@@ -47,7 +47,7 @@ public class UserProfile {
                 });
     }
 
-    public void createSignUp(String name, String lastName, String UID, String city , String country, int dd, int mm, int yy)
+    public void createSignUp(String name, String lastName, String UID, String city , String country, int dd, int mm, int yy, String hh)
     {
         Map<String, Object> info = new HashMap<>();
         info.put("Name",name);
@@ -58,8 +58,7 @@ public class UserProfile {
         info.put("City",city);
         info.put("Country",country);
         info.put("Description", "");
-
-
+        info.put("Hobby", hh);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
