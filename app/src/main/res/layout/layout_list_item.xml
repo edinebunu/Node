@@ -72,11 +72,12 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="Date"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/going"
@@ -87,5 +88,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/interested"
         app:layout_constraintEnd_toStartOf="@+id/interested"
         app:layout_constraintTop_toTopOf="@+id/interested" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="29dp"
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/calendar_icon_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

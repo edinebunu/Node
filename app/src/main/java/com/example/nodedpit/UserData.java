@@ -65,11 +65,12 @@ public class UserData extends AppCompatActivity {
                         month = month + 1;
                         Log.d(TAG, "onDateSet: date: " + day + "/" + month + "/" + year);
 
-                        mDay=day;
-                        mMonth=month;
-                        mYear=year;
+                        if(year > Calendar.getInstance().get(Calendar.YEAR) ) {
+                            Toast.makeText(UserData.this, "Invalid birth date",
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
-                        if(day <10 && month < 10) {
+                        else if(day <10 && month < 10) {
                             String date = "0" + day + "/" + "0" + month + "/" + year;
                             mDisplayDate.setText(date);
                         }
@@ -89,10 +90,9 @@ public class UserData extends AppCompatActivity {
                             mDisplayDate.setText(date);
                         }
 
-                        if(year > Calendar.getInstance().get(Calendar.YEAR) ) {
-                            Toast.makeText(UserData.this, "Invalid birth date",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        mDay=day;
+                        mMonth=month;
+                        mYear=year;
                     }
                 };
 

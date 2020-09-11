@@ -74,13 +74,13 @@ public class ProfileActivity extends AppCompatActivity {
                         String lastName = documentSnapshot.getString("LastName");
                         String country = documentSnapshot.getString("Country");
                         String city = documentSnapshot.getString("City");
-//                        String day = documentSnapshot.getString("DateDay");
-//                        String month = documentSnapshot.getString("DateMonth");
-//                        String year = documentSnapshot.getString("DateYear");
+                        String day = documentSnapshot.getString("DateDay");
+                        String month = documentSnapshot.getString("DateMonth");
+                        String year = documentSnapshot.getString("DateYear");
 
                         nameView.setText(firstName + " " + lastName);
                         location.setText(city + ", " + country);
-//                        dateofbirth.setText(day + "/" + month + "/" + year);
+                        dateofbirth.setText(day + "/" + month + "/" + year);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
