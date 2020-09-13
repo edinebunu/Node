@@ -20,6 +20,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Objects;
 
 public class MeetingsActivity extends AppCompatActivity {
 
@@ -74,11 +76,44 @@ public class MeetingsActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                mNames.add(document.getString("Name"));
+                            int year = Calendar.getInstance().get(Calendar.YEAR);
+                            int month = Calendar.getInstance().get(Calendar.MONTH);
+                            int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                            int minute = Calendar.getInstance().get(Calendar.MINUTE);
 
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                if(
+                                        Integer.parseInt(Objects.requireNonNull(document.get("Year").toString())) > year ||
+
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("Year").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Month").toString())) > month ||
+
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("Year").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Month").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Day").toString())) > day ||
+
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("Year").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Month").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Day").toString())) == day &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Hour").toString())) > hour ||
+
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("Year").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Month").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Day").toString())) == day &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Hour").toString())) == hour &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("Minute").toString())) > minute) {
+                                    mNames.add(document.getString("Name"));
+                                }
                             }
+
                             initRecyclerView();
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }

@@ -35,6 +35,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -151,9 +153,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                mNames.add(document.getString("Name"));
-                                mDesc.add(document.getString("Description"));
-                                mIds.add(document.getId());
+
+                                int year = Calendar.getInstance().get(Calendar.YEAR);
+                                int month = Calendar.getInstance().get(Calendar.MONTH);
+                                int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                                int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                                int minute = Calendar.getInstance().get(Calendar.MINUTE);
+
+                                if(  Integer.parseInt( Objects.requireNonNull(document.get("DateYear").toString())) > year ||
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) > month ||
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) > day ||
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) == day &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateHour").toString())) > hour ||
+
+                                                Integer.parseInt(Objects.requireNonNull(document.get("DateYear").toString())) == year &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateMonth").toString())) == month &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateDay").toString())) == day &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateHour").toString())) == hour &&
+                                                        Integer.parseInt(Objects.requireNonNull(document.get("DateMin").toString())) > minute) {
+                                    mNames.add(document.getString("Name"));
+                                    mDesc.add(document.getString("Description"));
+                                    mIds.add(document.getId());
+                                }
 
 
 

@@ -48,6 +48,7 @@ public class EventPageActivity extends AppCompatActivity {
     TextView mDate;
     TextView mTime;
     TextView mDescription;
+    TextView locationp;
 
     ImageView coverImg;
 
@@ -77,6 +78,7 @@ public class EventPageActivity extends AppCompatActivity {
         mTime = findViewById(R.id.textView10);
         mDescription = findViewById(R.id.textView8);
         chat = findViewById(R.id.eventChatRecyclerView);
+        locationp = findViewById(R.id.locationp);
 
         DocumentReference docRef = db.collection("Events").document(mDocumentName);
 
@@ -92,6 +94,7 @@ public class EventPageActivity extends AppCompatActivity {
                         mDescription.setText(document.getString("Description"));
                         mDate.setText(document.get("DateDay") + " / "  + document.get("DateMonth") + " / " + document.get("DateYear"));
                         mTime.setText(document.get("DateHour") + " : "  + document.get("DateHour"));
+                        locationp.setText("Location: " + document.get("Location").toString());
 
                         try {
                             e.setCoverImg(document.getString("Name"),coverImg);
