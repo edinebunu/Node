@@ -2,6 +2,7 @@ package com.example.nodedpit;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,9 @@ public class FriendProfile extends AppCompatActivity {
     TextView nameView;
     TextView description;
     RecyclerView friend;
+    TextView dateofbirth;
+    TextView location;
+    TextView hobby;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,9 @@ public class FriendProfile extends AppCompatActivity {
         nameView = findViewById(R.id.friend_name_view);
         description = findViewById(R.id.friend_description_text);
         friend = findViewById(R.id.friends_friends_view);
+        dateofbirth = findViewById(R.id.DateOfBirth);
+        location = findViewById(R.id.Location);
+        hobby = findViewById(R.id.Hobby);
 
         try {
             e.getProfileImg(Uid, profile);
@@ -68,8 +75,25 @@ public class FriendProfile extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String firstName = documentSnapshot.getString("Name");
                         String lastName = documentSnapshot.getString("LastName");
+                        String country = documentSnapshot.getString("Country");
+                        String city = documentSnapshot.getString("City");
+                        String day = documentSnapshot.getString("DateDay");
+                        String month = documentSnapshot.getString("DateMonth");
+                        String year = documentSnapshot.getString("DateYear");
+                        String currentHobby = documentSnapshot.getString("Hobby");
+                        String desc = documentSnapshot.getString("Description");
 
                         nameView.setText(firstName + " " + lastName);
+                        location.setText(city + ", " + country);
+                        dateofbirth.setText(day + "/" + month + "/" + year);
+                        hobby.setText("Hobby : " + currentHobby);
+
+                        if(desc.equals("")) {
+                            description.setVisibility(View.INVISIBLE);
+                        }
+                        else{
+                            description.setText("Description: " + desc);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

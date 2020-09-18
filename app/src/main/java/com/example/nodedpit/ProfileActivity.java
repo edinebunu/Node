@@ -72,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         dateofbirth = findViewById(R.id.DateOfBirth);
         location = findViewById(R.id.Location);
 
-        hobby = findViewById(R.id.textView32);
+        hobby = findViewById(R.id.Hobby);
 
         addDesc = findViewById(R.id.button5);
         userDesc = findViewById(R.id.editTextTextPersonName14);

@@ -142,10 +142,10 @@
         android:text="Description:"
         android:textColor="#649C45"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        app:layout_constraintTop_toBottomOf="@+id/Hobby" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/Hobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
