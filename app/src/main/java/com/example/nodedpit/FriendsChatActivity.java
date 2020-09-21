@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nodedpit.Firebase.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -26,10 +29,13 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsChatActivity extends AppCompatActivity {
 
@@ -37,6 +43,10 @@ public class FriendsChatActivity extends AppCompatActivity {
     String mDocumentName;
     final ArrayList<String> smt = new ArrayList<>();
     RecyclerView chat;
+    String mUid;
+    CircleImageView profPic;
+    DocumentReference nameRef;
+    TextView fName;
 
     EditText mtMessage;
 
@@ -48,6 +58,38 @@ public class FriendsChatActivity extends AppCompatActivity {
         mDocumentName = intent.getStringExtra("User");
         chat = findViewById(R.id.recyclerView4);
         mtMessage = findViewById(R.id.editTextTextPersonName13);
+
+        mUid = intent.getStringExtra("User");
+
+        profPic = findViewById(R.id.ppp);
+
+        nameRef = db.collection("Users").document(mUid);
+
+        fName = findViewById(R.id.textView32);
+
+        Event e = new Event();
+        try {
+            e.setProfileImg(mUid,profPic);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        nameRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        String name = documentSnapshot.getString("Name") +" "+ documentSnapshot.getString("LastName");
+                        fName.setText(name);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
     }
 
     public void deleteMessage(View view){
@@ -63,6 +105,23 @@ public class FriendsChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         db.collection("FriendsChat").document(mAuth.getUid()).collection("Chat").document(mDocumentName).collection("ChatRoom")
+                .orderBy("Timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        final ArrayList<String> messages = new ArrayList<>();
+                        final ArrayList<String> messageId = new ArrayList<>();
+                        smt.clear();
+                        assert queryDocumentSnapshots != null;
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            smt.add(document.getId());
+                            messages.add(document.getString("Message"));
+                            messageId.add(document.getString("Host"));
+                        }
+                        updateChat(smt,messages,messageId);
+                    }});
+
+        db.collection("FriendsChat").document(mDocumentName).collection("Chat").document(mAuth.getUid()).collection("ChatRoom")
                 .orderBy("Timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

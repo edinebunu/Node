@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
+        android:maxLength="23"
         android:requiresFadingEdge="horizontal|vertical"
         android:shadowDx="1"
         android:shadowDy="-5"
