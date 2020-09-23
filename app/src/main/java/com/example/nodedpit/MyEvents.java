@@ -3,6 +3,7 @@ package com.example.nodedpit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,9 +44,9 @@ public class MyEvents extends AppCompatActivity {
 
     public void getEventBuffer(final ArrayList mNames, final ArrayList mDesc, final ArrayList mIds)
     {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events")
-                .whereEqualTo("HostId", mUid)
+              //  .whereEqualTo("HostId", mUid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     private static final String TAG = "Event";
@@ -53,13 +54,35 @@ public class MyEvents extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                mNames.add(document.getString("Name"));
-                                mDesc.add(document.getString("Description"));
-                                mIds.add(document.getId());
+                            for (final QueryDocumentSnapshot document : task.getResult()) {
 
+                                final int[] exists = {0};
+                                db.collection("Events").document(document.getId()).collection("GoingUsers")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document1 : task.getResult()) {
+                                                        if(document1.getId().equals(mUid))
+                                                        {
+                                                            exists[0] = 1;
+                                                            mNames.add(document.getString("Name"));
+                                                            mDesc.add(document.getString("Description"));
+                                                            mIds.add(document.getId());
+                                                        }
+                                                    }
+                                                    initRecyclerView(mNames,mDesc,mIds);
+                                                } else {
+                                                    Log.w(TAG, "Error getting documents.", task.getException());
+                                                }
+                                            }
+                                        });
+                                if(exists[0] == 1) {
+                                    Toast.makeText(MyEvents.this, document.getId(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            initRecyclerView(mNames,mDesc,mIds);
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -67,7 +90,7 @@ public class MyEvents extends AppCompatActivity {
                 });
     }
 
-    private void initRecyclerView(final ArrayList mNames, final ArrayList mDesc, final ArrayList mIds) {
+    private void initRecyclerView(final ArrayList<String> mNames, final ArrayList<String> mDesc, final ArrayList<String> mIds) {
         RecyclerView recyclerView = findViewById(R.id.myEventsView);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mDesc, mIds, this);
         recyclerView.setAdapter(adapter);

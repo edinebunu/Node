@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,8 @@ public class MeetingsChatActivity extends AppCompatActivity {
 
     EditText mtMessage;
 
+    TextView meetName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,9 @@ public class MeetingsChatActivity extends AppCompatActivity {
         mDocumentName = intent.getStringExtra("Id");
         chat = findViewById(R.id.recyclerView2);
         mtMessage = findViewById(R.id.editTextTextPersonName11);
+        meetName = findViewById(R.id.textView30);
+
+        meetName.setText(intent.getStringExtra("Name"));
     }
 
     public void deleteMessage(View view){

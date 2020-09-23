@@ -62,6 +62,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
     @Override
     public void onBindViewHolder(@NonNull final MeetingsAdapter.GoingViewHolder holder, final int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final String[] meetName = new String[1];
 
         final String myId = ids.get(position);
 
@@ -76,7 +77,9 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
         db.collection("Meetings").document(ids.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.name.setText(documentSnapshot.getString("Name"));
+                meetName[0] = documentSnapshot.getString("Name");
+                holder.name.setText(meetName[0]);
+
                 setProfilePicture(documentSnapshot.getString("HostId"),holder.profile);
             }
         })
@@ -106,6 +109,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.GoingV
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MeetingsChatActivity.class);
                 intent.putExtra("Id",ids.get(position));
+                intent.putExtra("Name", meetName[0]);
                 mContext.startActivity(intent);
             }
         });

@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/edit_text_shape"
         android:ems="10"
         android:fontFamily="sans-serif"
@@ -51,6 +52,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="#636363"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
@@ -124,6 +126,7 @@
         android:text="NAME"
         android:textColor="#649C45"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7" />
 </androidx.constraintlayout.widget.ConstraintLayout>
