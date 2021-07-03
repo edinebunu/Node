@@ -12,9 +12,9 @@ in the app, and are public to users in the same city as the event.
     -real time updates from server
   
   Tools used for building the app :
-    -Java
-    -Android Studio
-    -Firebase Firestore
+    -Java <br>
+    -Android Studio<br>
+    -Firebase Firestore<br>
     -Other external dependencies for implementing QR code functionalities
 
 <img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165400.png" width="300"> |
