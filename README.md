@@ -11,7 +11,7 @@ in the app, and are public to users in the same city as the event.
     -user friendly interface with animations
     -real time updates from server
   
-  Tools used for building the app :
+  Tools used for building the app :<br>
     -Java <br>
     -Android Studio<br>
     -Firebase Firestore<br>
