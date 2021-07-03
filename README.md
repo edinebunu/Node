@@ -17,6 +17,6 @@ in the app, and are public to users in the same city as the event.
     -Firebase Firestore
     -Other external dependencies for implementing QR code functionalities
 
-<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165400.png" width="200" style={"display="inline"}>
-<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165422.png" width="200" style={"display="inline"}>
-<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165738.png" width="200" >
+<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165400.png" width="200"> |
+<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165422.png" width="200">
+<img src="https://github.com/edinebunu/Node/blob/master/Images/Screenshot%202021-07-03%20165738.png" width="200">
